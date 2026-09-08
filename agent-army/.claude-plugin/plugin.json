@@ -1,0 +1,12 @@
+{
+  "name": "agent-army",
+  "description": "Run a fleet of autonomous Claude Code agents in parallel — one per independent seam of work, each isolated in its own git worktree and branch, coordinated by a changeable master through an on-disk command centre. Opens with a Front Door interview that routes cheap work to subagents/Workflow instead.",
+  "version": "0.2.2",
+  "author": {
+    "name": "Amjad Pathan"
+  },
+  "homepage": "https://claude-skills.amjad1233.com",
+  "repository": "https://github.com/amjad1233/ai-skills",
+  "license": "MIT",
+  "keywords": ["claude-code", "skill", "subagents", "parallel", "worktree", "orchestration", "fleet", "agents"]
+}

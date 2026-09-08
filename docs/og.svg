@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0816"/>
+      <stop offset="1" stop-color="#07060f"/>
+    </linearGradient>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.45" stop-color="#7c5cff"/>
+      <stop offset="0.8" stop-color="#ff5fa2"/>
+      <stop offset="1" stop-color="#9bff6b"/>
+    </linearGradient>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="90"/>
+    </filter>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- gradient mesh blobs -->
+  <g filter="url(#blur)" opacity="0.55">
+    <circle cx="170" cy="140" r="200" fill="#7c5cff"/>
+    <circle cx="1050" cy="120" r="180" fill="#22d3ee"/>
+    <circle cx="1080" cy="560" r="220" fill="#ff5fa2"/>
+    <circle cx="180" cy="560" r="190" fill="#9bff6b"/>
+  </g>
+  <rect width="1200" height="630" fill="#07060f" opacity="0.34"/>
+
+  <!-- wordmark -->
+  <g transform="translate(80,74)">
+    <rect width="50" height="50" rx="14" fill="url(#logo)"/>
+    <text x="25" y="36" font-size="30" font-weight="800" fill="#0a0816" text-anchor="middle">/</text>
+    <text x="68" y="34" font-size="27" font-weight="700" fill="#f3f1ff">ai-skills</text>
+  </g>
+  <text x="1120" y="106" font-size="17" font-weight="600" fill="#a9a6d4" text-anchor="end" letter-spacing="1">OPEN-SOURCE · MIT</text>
+
+  <!-- headline -->
+  <text x="80" y="248" font-size="74" font-weight="800" fill="#f3f1ff" letter-spacing="-2">Skills that give Claude Code</text>
+  <text x="80" y="332" font-size="74" font-weight="800" letter-spacing="-2" fill="url(#grad)">memory and muscle.</text>
+
+  <!-- subhead -->
+  <text x="80" y="392" font-size="26" fill="#c7c4ec">Open-source plugins for Claude Code — install in seconds, then just ask Claude.</text>
+
+  <!-- install pill -->
+  <g transform="translate(80,436)">
+    <rect width="660" height="64" rx="16" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="26" y="41" font-size="23" font-family="SF Mono, Menlo, monospace" fill="#9bff6b">$</text>
+    <text x="50" y="41" font-size="22" font-family="SF Mono, Menlo, monospace" fill="#cfe9ff">/plugin marketplace add amjad1233/ai-skills</text>
+  </g>
+
+  <!-- skill chips -->
+  <g transform="translate(80,536)" font-size="20" font-weight="700">
+    <g>
+      <rect width="216" height="50" rx="13" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <circle cx="28" cy="25" r="6" fill="#7c5cff"/>
+      <text x="46" y="33" fill="#e8e6ff">agent-army</text>
+    </g>
+    <g transform="translate(236,0)">
+      <rect width="300" height="50" rx="13" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.12"/>
+      <circle cx="28" cy="25" r="6" fill="#22d3ee"/>
+      <text x="46" y="33" fill="#e8e6ff">continuation</text>
+    </g>
+    <text x="566" y="33" font-size="18" font-weight="500" fill="#a9a6d4">+ more incoming</text>
+  </g>
+
+  <text x="1120" y="566" font-size="20" font-weight="600" fill="#a9a6d4" text-anchor="end">claude-skills.amjad1233.com</text>
+</svg>

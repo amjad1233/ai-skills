@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#7aa2ff"/>
+    </marker>
+    <style>
+      .bg{fill:#0f1221}
+      .card{fill:#171a2e;stroke:#2a2f4a;rx:12}
+      .h{fill:#7aa2ff;font-size:15px;font-weight:700}
+      .t{fill:#e8eaf6;font-size:12.5px}
+      .m{fill:#9aa3c7;font-size:11.5px}
+      .tag{font-size:10.5px;font-weight:700}
+      .good{fill:#2ecc71}.bad{fill:#ff6b6b}.acc{fill:#7aa2ff}
+      .line{stroke:#2a2f4a;stroke-width:1}
+      .flow{stroke:#7aa2ff;stroke-width:1.5;fill:none}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="980" height="620"/>
+  <text x="28" y="40" fill="#e8eaf6" font-size="22" font-weight="700">Three ways to parallelise — and how they nest</text>
+  <text x="28" y="62" class="m">In-session subagents · Workflow tool · Agent Army</text>
+
+  <!-- Column 1: subagents -->
+  <rect class="card" x="28" y="86" width="290" height="232" rx="12"/>
+  <text x="46" y="112" class="tag acc">BUILT-IN · CHEAP</text>
+  <text x="46" y="134" class="h">In-session subagents</text>
+  <text x="46" y="158" class="m">Agent / Task tool — headless</text>
+  <rect x="46" y="172" width="254" height="60" rx="8" fill="#10132a" stroke="#2a2f4a"/>
+  <text x="60" y="194" class="t">your session ──▶ Agent("do X")</text>
+  <text x="60" y="212" class="m">own context · returns 1 summary</text>
+  <text x="60" y="226" class="m">no window · then vanishes</text>
+  <text x="46" y="254" class="t good">▲ zero orchestration</text>
+  <text x="46" y="272" class="t good">▲ own context per subagent</text>
+  <text x="46" y="290" class="t bad">▼ dies with your chat</text>
+  <text x="46" y="308" class="t bad">▼ shared filesystem</text>
+
+  <!-- Column 2: workflow -->
+  <rect class="card" x="345" y="86" width="290" height="232" rx="12"/>
+  <text x="363" y="112" class="tag acc">SCRIPTED · CHEAP</text>
+  <text x="363" y="134" class="h">Workflow tool</text>
+  <text x="363" y="158" class="m">deterministic fan-out of subagents</text>
+  <rect x="363" y="172" width="254" height="60" rx="8" fill="#10132a" stroke="#2a2f4a"/>
+  <text x="377" y="194" class="t">pipeline(50 items, stages…)</text>
+  <text x="377" y="212" class="m">~10 concurrent · worktree per item</text>
+  <text x="377" y="226" class="m">no windows to babysit</text>
+  <text x="363" y="254" class="t good">▲ worktree-isolated sweep</text>
+  <text x="363" y="272" class="t good">▲ great for 50 small tasks</text>
+  <text x="363" y="290" class="t bad">▼ dies with your chat</text>
+  <text x="363" y="308" class="t bad">▼ controller accrues summaries</text>
+
+  <!-- Column 3: agent army -->
+  <rect class="card" x="662" y="86" width="290" height="232" rx="12" stroke="#2ecc71"/>
+  <text x="680" y="112" class="tag good">SEPARATE SESSIONS · HEAVY</text>
+  <text x="680" y="134" class="h">Agent Army</text>
+  <text x="680" y="158" class="m">N full claude processes · own windows</text>
+  <rect x="680" y="172" width="254" height="60" rx="8" fill="#10132a" stroke="#2a2f4a"/>
+  <text x="694" y="194" class="t">window per seam · own worktree</text>
+  <text x="694" y="212" class="m">full context each · runs for hours</text>
+  <text x="694" y="226" class="m">command centre on disk = survives</text>
+  <text x="680" y="254" class="t good">▲ independent full contexts</text>
+  <text x="680" y="272" class="t good">▲ survives the master + context limits</text>
+  <text x="680" y="290" class="t good">▲ inspectable, babysittable windows</text>
+  <text x="680" y="308" class="t bad">▼ N full sessions = real cost</text>
+
+  <!-- nesting -->
+  <rect class="card" x="28" y="344" width="924" height="118" rx="12"/>
+  <text x="46" y="370" class="h">They nest — a fleet agent runs subagents internally</text>
+  <rect x="46" y="384" width="220" height="62" rx="8" fill="#10132a" stroke="#2a2f4a"/>
+  <text x="60" y="404" class="t">window: g6  (full session)</text>
+  <text x="60" y="422" class="m">coordinator</text>
+  <text x="74" y="438" class="m">├ subagent: implement / test / review</text>
+  <text x="286" y="404" class="t">Outer layer = parallelism + survival.</text>
+  <text x="286" y="424" class="t">Inner layer = lean context per agent.</text>
+  <text x="286" y="444" class="m">50 tickets in 5 seams → 5 windows, each sweeping its tickets with subagents (not 50 windows).</text>
+
+  <!-- decision strip -->
+  <rect class="card" x="28" y="488" width="924" height="104" rx="12"/>
+  <text x="46" y="514" class="h">Which do I use?</text>
+  <text x="46" y="538" class="t">Fits one context + finish now</text>
+  <text x="360" y="538" class="acc">──▶ in-session subagents</text>
+  <text x="46" y="558" class="t">Many small isolated tasks (sweep / migration)</text>
+  <text x="360" y="558" class="acc">──▶ Workflow tool (worktree-isolated)</text>
+  <text x="46" y="578" class="t">4–9 big independent seams · deadline · babysat</text>
+  <text x="360" y="578" class="good">──▶ AGENT ARMY</text>
+  <text x="640" y="538" class="m">Cost rises left → right.</text>
+  <text x="640" y="558" class="m">Agent-army trades MONEY for WALL-CLOCK;</text>
+  <text x="640" y="578" class="m">only worth it when time is the binding constraint.</text>
+</svg>

@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+
+# Local session handoffs — not for the shared repo
+.claude/continuations/
+.claude/learnings/
+
+# continuation derived files
+.continuation/HOT.md
+.continuation/INDEX.md

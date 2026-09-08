@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "amjad1233",
+  "description": "Amjad's open-source Claude Code skills — each a complete, standalone plugin. Add the marketplace once, install whichever skills you want.",
+  "owner": {
+    "name": "Amjad Pathan",
+    "email": "amjad1233@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "agent-army",
+      "source": "./agent-army",
+      "description": "Run a fleet of autonomous Claude Code agents in parallel — one per independent seam, each in its own git worktree, coordinated by a changeable master through an on-disk command centre. Opens with a Front Door interview that routes cheap work elsewhere.",
+      "category": "workflow",
+      "tags": ["claude-code", "skill", "subagents", "parallel", "worktree", "orchestration", "fleet", "agents"]
+    },
+    {
+      "name": "continuation",
+      "source": "./continuation",
+      "description": "Project memory for any coding agent. Decisions, learnings, conventions and session handoffs as typed records in .continuation/, written autonomously, read in one hot file every session. /end, /continue, /remember, /continuation-review, /next.",
+      "category": "workflow",
+      "tags": ["memory", "session", "handoff", "continuation", "learnings", "decisions", "resume", "agents", "opencode", "codex", "cursor"]
+    }
+  ]
+}

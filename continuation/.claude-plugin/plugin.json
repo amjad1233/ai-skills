@@ -1,0 +1,10 @@
+{
+  "name": "continuation",
+  "description": "Project memory for any coding agent. Typed decisions, learnings, conventions and session handoffs in .continuation/, written autonomously, read in one hot file every session. /end, /continue, /remember, /continuation-review, /next.",
+  "version": "2.0.0",
+  "author": { "name": "Amjad Pathan" },
+  "homepage": "https://claude-skills.amjad1233.com",
+  "repository": "https://github.com/amjad1233/ai-skills",
+  "license": "MIT",
+  "keywords": ["memory", "session", "handoff", "continuation", "learnings", "decisions", "resume", "agents"]
+}

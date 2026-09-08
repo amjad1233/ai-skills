@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest a new skill or an improvement to an existing one.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the use case, not just the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - New skill
+        - agent-army
+        - continuation
+        - marketplace / tooling
+        - website
+        - other
+    validations:
+      required: true

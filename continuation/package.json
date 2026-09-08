@@ -1,0 +1,7 @@
+{
+  "name": "continuation-helper",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test scripts/test/" }
+}

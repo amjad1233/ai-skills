@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ai-skills — Open-source plugins for Claude Code</title>
+<meta name="description" content="ai-skills is an open-source, MIT marketplace of plugins for Claude Code. Give your AI coding agent memory across sessions (continuation) and parallelism that survives context limits (agent-army). Install in seconds.">
+<meta name="keywords" content="Claude Code skills, Claude Code plugins, Claude Code marketplace, AI coding agent, Claude Code context window, parallel Claude agents, session handoff">
+<meta name="author" content="Amjad Pathan">
+<link rel="canonical" href="https://claude-skills.amjad1233.com">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://claude-skills.amjad1233.com">
+<meta property="og:title" content="ai-skills — Open-source plugins for Claude Code">
+<meta property="og:description" content="Skills that give Claude Code memory and muscle. Open-source, MIT, install in seconds.">
+<meta property="og:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ai-skills — Open-source plugins for Claude Code">
+<meta name="twitter:description" content="Skills that give Claude Code memory and muscle. Open-source, MIT, install in seconds.">
+<meta name="twitter:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta name="theme-color" content="#070710">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"ai-skills","url":"https://claude-skills.amjad1233.com","description":"An open-source, MIT marketplace of skills for coding agents: project memory that any agent can read (continuation) and parallel agent fleets (agent-army).","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"agent-army","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","description":"Run a fleet of autonomous Claude agents in parallel, each in its own git worktree, coordinated by an on-disk command centre that survives context limits.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}},{"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"continuation","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","description":"Session handoffs that give Claude Code memory across sessions, so you never re-explain your project again.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}}]}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  :root{
+    --bg:#070710; --bg2:#0b0b16;
+    --text:#f4f5fb; --dim:rgba(244,245,251,.66); --mute:rgba(244,245,251,.40);
+    --surface:rgba(255,255,255,.045); --surface2:rgba(255,255,255,.075);
+    --border:rgba(255,255,255,.10); --border2:rgba(255,255,255,.17);
+    --a1:#a78bfa; --a2:#22d3ee; --a3:#e879f9; --lime:#bef264;
+    --font-d:'Space Grotesk',sans-serif; --font-b:'Hanken Grotesk',sans-serif; --font-m:'JetBrains Mono',ui-monospace,monospace;
+  }
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-b);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  ::selection{background:rgba(167,139,250,.35);}
+  a{color:inherit;text-decoration:none;}
+  code,pre{font-family:var(--font-m);}
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:6px;}
+  .cs-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  @keyframes csdrift{0%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-30px) scale(1.12);}100%{transform:translate(0,0) scale(1);}}
+  @keyframes csfloat{0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}}
+  @keyframes csblink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+  @keyframes csdash{to{stroke-dashoffset:-24;}}
+  .cs-flow{stroke-dasharray:5 7;animation:csdash 1.4s linear infinite;}
+  .cs-nav{transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,padding .3s ease;}
+  .cs-nav.scrolled{background:rgba(8,8,18,.78)!important;border-bottom:1px solid var(--border)!important;box-shadow:0 10px 40px rgba(0,0,0,.45)!important;padding-top:13px!important;padding-bottom:13px!important;}
+  [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  [data-reveal].in{opacity:1;transform:none;}
+  .cs-link{position:relative;color:var(--dim);transition:color .2s ease;}
+  .cs-link:hover{color:var(--text);}
+  .cs-card{transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease,background .3s ease;}
+  .cs-card:hover{transform:translateY(-5px);border-color:var(--border2)!important;box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 1px rgba(167,139,250,.18)!important;}
+  .cs-burger{display:none;}
+  .cs-skill{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:stretch;}
+  .cs-chip{padding:9px 17px;border-radius:100px;font-family:var(--font-b);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--surface);color:var(--dim);transition:background .2s ease,color .2s ease,border-color .2s ease;}
+  .cs-chip.active{border-color:transparent;background:linear-gradient(120deg,var(--a1),var(--a2));color:#0a0a12;}
+  @media(max-width:760px){ .cs-skill{grid-template-columns:1fr;gap:20px;} }
+  @media(min-width:981px){ #cs-menu{display:none!important;} }
+  @media(max-width:980px){
+    .cs-desk{display:none!important;}
+    .cs-burger{display:inline-flex!important;}
+    .cs-hero-visual{display:none!important;}
+    .hero-grid{grid-template-columns:1fr!important;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    [data-reveal]{opacity:1!important;transform:none!important;transition:none!important;}
+    .cs-blob,.cs-flow,.cs-hero-visual{animation:none!important;}
+  }
+</style>
+<script defer src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+</head>
+<body>
+
+<div style="position:relative;min-height:100vh;color:var(--text);font-family:var(--font-b);">
+
+  <div aria-hidden="true" style="position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 90% at 50% -10%,#120b2e 0%,var(--bg) 55%);">
+    <div class="cs-blob" style="position:absolute;top:-12%;left:-6%;width:46vw;height:46vw;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.42),transparent 65%);filter:blur(60px);animation:csdrift 22s ease-in-out infinite;"></div>
+    <div class="cs-blob" style="position:absolute;top:18%;right:-12%;width:42vw;height:42vw;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.30),transparent 65%);filter:blur(70px);animation:csdrift 28s ease-in-out infinite reverse;"></div>
+    <div class="cs-blob" style="position:absolute;bottom:-14%;left:24%;width:40vw;height:40vw;border-radius:50%;background:radial-gradient(circle,rgba(232,121,249,.24),transparent 65%);filter:blur(80px);animation:csdrift 25s ease-in-out infinite;"></div>
+    <div id="cs-fx" style="position:absolute;inset:0;pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(140% 120% at 50% 0%,transparent 40%,rgba(7,7,16,.55) 100%);"></div>
+  </div>
+
+  <div>
+
+    <!-- NAV -->
+    <header>
+    <nav class="cs-nav" aria-label="Primary" style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,18,.30);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:18px 0;border-bottom:1px solid transparent;">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:18px;">
+        <a href="#top" style="display:flex;align-items:center;gap:11px;font-family:var(--font-d);font-weight:700;font-size:18px;letter-spacing:-.02em;">
+          <span style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;font-family:var(--font-m);font-weight:600;color:#0a0a12;font-size:15px;box-shadow:0 4px 18px rgba(167,139,250,.5);">/</span>
+          ai-skills
+        </a>
+        <div class="cs-desk" style="display:flex;align-items:center;gap:26px;margin-left:14px;font-size:15px;font-weight:500;">
+          <a class="cs-link" href="#skills">Skills</a>
+          <a class="cs-link" href="#problem">The problem</a>
+          <a class="cs-link" href="#how">How it works</a>
+          <a class="cs-link" href="#start">Get started</a>
+          <a class="cs-link" href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener">Docs</a>
+        </div>
+        <div class="cs-desk" style="display:flex;align-items:center;gap:12px;margin-left:auto;">
+          <a href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener" aria-label="Star ai-skills on GitHub" style="display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid var(--border2);border-radius:11px;font-size:14px;font-weight:600;background:var(--surface);">
+            <span style="color:var(--lime);">★</span> Star
+          </a>
+          <button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" data-copied="Copied ✓" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:none;border-radius:11px;font-family:var(--font-b);font-size:14px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;box-shadow:0 6px 24px rgba(167,139,250,.4);">
+            <span>Add the marketplace</span>
+          </button>
+        </div>
+        <button class="cs-burger" id="cs-burger" aria-label="Open menu" aria-expanded="false" style="margin-left:auto;width:42px;height:42px;border-radius:11px;border:1px solid var(--border2);background:var(--surface);color:var(--text);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+          <span style="width:18px;height:2px;background:currentColor;border-radius:2px;"></span>
+          <span style="width:18px;height:2px;background:currentColor;border-radius:2px;"></span>
+          <span style="width:18px;height:2px;background:currentColor;border-radius:2px;"></span>
+        </button>
+      </div>
+    </nav>
+
+    <div id="cs-menu" style="position:fixed;top:72px;left:12px;right:12px;z-index:99;background:rgba(11,11,22,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:18px;padding:14px;display:none;flex-direction:column;gap:4px;box-shadow:0 24px 60px rgba(0,0,0,.6);">
+      <a class="cs-menu-link" href="#skills" style="padding:13px;border-radius:11px;font-weight:600;font-size:16px;">Skills</a>
+      <a class="cs-menu-link" href="#problem" style="padding:13px;border-radius:11px;font-weight:600;font-size:16px;">The problem</a>
+      <a class="cs-menu-link" href="#how" style="padding:13px;border-radius:11px;font-weight:600;font-size:16px;">How it works</a>
+      <a class="cs-menu-link" href="#start" style="padding:13px;border-radius:11px;font-weight:600;font-size:16px;">Get started</a>
+      <a class="cs-menu-link" href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener" style="padding:13px;border-radius:11px;font-weight:600;font-size:16px;">Docs</a>
+      <button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" data-copied="Copied ✓ — paste into Claude Code" style="margin-top:6px;padding:14px;border:none;border-radius:11px;font-family:var(--font-b);font-size:16px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;">
+        <span>Add the marketplace</span>
+      </button>
+    </div>
+
+    <!-- HERO -->
+    <div id="top" style="max-width:1200px;margin:0 auto;padding:158px 24px 84px;scroll-margin-top:90px;">
+      <div class="hero-grid" style="display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:center;">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border:1px solid var(--border2);border-radius:100px;background:var(--surface);font-size:13px;font-weight:500;color:var(--dim);margin-bottom:26px;font-family:var(--font-m);">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);"></span>
+            open-source · MIT · for Claude Code
+          </div>
+          <h1 style="font-family:var(--font-d);font-weight:700;font-size:clamp(2.7rem,6.1vw,4.9rem);line-height:.99;letter-spacing:-.035em;margin:0 0 22px;">
+            Skills that give Claude&nbsp;Code
+            <span style="background:linear-gradient(105deg,var(--a1),var(--a2) 60%,var(--a3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">memory and muscle.</span>
+          </h1>
+          <p style="font-size:clamp(1.05rem,1.6vw,1.26rem);line-height:1.55;color:var(--dim);max-width:560px;margin:0 0 30px;">
+            Your AI coding agent is brilliant — and forgetful, and single-threaded. <strong style="color:var(--text);font-weight:600;">ai-skills</strong> is an open-source marketplace of drop-in plugins that fix that. Add the marketplace once, install what you need, then just ask Claude.
+          </p>
+
+          <div style="max-width:560px;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:14px;padding:11px 11px 11px 16px;">
+              <span style="color:var(--a2);font-family:var(--font-m);font-size:14px;">$</span>
+              <code style="flex:1;color:var(--text);font-size:14px;white-space:nowrap;overflow:auto;">/plugin marketplace add amjad1233/ai-skills</code>
+              <button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" aria-label="Copy marketplace install command" style="border:none;border-radius:9px;padding:9px 16px;font-family:var(--font-b);font-size:13px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;">
+                <span>Copy</span>
+              </button>
+            </div>
+            <p style="margin:9px 2px 0;font-size:12.5px;color:var(--mute);font-family:var(--font-m);">↳ <span style="color:var(--dim);">@amjad1233</span> is the marketplace name — not a GitHub handle.</p>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;">
+            <a href="#skills" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:13px;font-weight:600;font-size:15px;color:#0a0a12;background:var(--text);">Browse the skills →</a>
+            <a href="#problem" style="display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:13px;font-weight:600;font-size:15px;border:1px solid var(--border2);background:var(--surface);color:var(--text);">See the problem</a>
+            <a href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:13px;font-weight:600;font-size:15px;color:var(--dim);"><span style="color:var(--lime);">★</span> Star on GitHub</a>
+          </div>
+        </div>
+
+        <div class="cs-hero-visual" style="position:relative;animation:csfloat 7s ease-in-out infinite;">
+          <div style="background:rgba(13,13,24,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border2);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;">
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--border);">
+              <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;"></span>
+              <span style="width:11px;height:11px;border-radius:50%;background:#febc2e;"></span>
+              <span style="width:11px;height:11px;border-radius:50%;background:#28c840;"></span>
+              <span style="margin-left:8px;font-family:var(--font-m);font-size:12px;color:var(--mute);">claude-code — zsh</span>
+            </div>
+            <div style="padding:20px 18px;font-family:var(--font-m);font-size:13.5px;line-height:1.9;">
+              <div style="color:var(--mute);">› <span style="color:var(--a2);">/plugin</span> install continuation@amjad1233</div>
+              <div style="color:var(--lime);">✓ memory across sessions · ready</div>
+              <div style="color:var(--mute);margin-top:8px;">› <span style="color:var(--a2);">/continue</span></div>
+              <div style="color:var(--lime);">✓ resumed · git state verified in 5s</div>
+              <div style="color:var(--text);margin-top:14px;">› spin up an agent army for these<br>&nbsp;&nbsp;five changes</div>
+              <div style="color:var(--a1);margin-top:6px;">⚡ launching 5 agents across 5 worktrees…<span style="display:inline-block;width:8px;height:15px;background:var(--a1);margin-left:3px;vertical-align:middle;animation:csblink 1s steps(1) infinite;"></span></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:-18px;right:-14px;background:rgba(13,13,24,.7);backdrop-filter:blur(14px);border:1px solid var(--border2);border-radius:14px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);">
+            <div style="font-family:var(--font-d);font-weight:700;font-size:22px;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">2 skills</div>
+            <div style="font-size:12px;color:var(--mute);">more incoming →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </header>
+
+    <main>
+
+    <!-- THE PROBLEM -->
+    <section id="problem" aria-labelledby="problem-h" style="max-width:1200px;margin:0 auto;padding:50px 24px;scroll-margin-top:84px;">
+      <div data-reveal style="max-width:760px;margin-bottom:34px;">
+        <div style="font-family:var(--font-m);font-size:13px;color:var(--a3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// the problem</div>
+        <h2 id="problem-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.1rem);letter-spacing:-.03em;line-height:1.02;margin:0;">Claude Code is amazing — until the session ends or the work piles up.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:22px;">
+        <article class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;">
+            <span style="width:38px;height:38px;border-radius:11px;background:rgba(167,139,250,.14);border:1px solid var(--border2);display:grid;place-items:center;color:var(--a1);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg></span>
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:22px;letter-spacing:-.02em;margin:0;">&ldquo;It forgets.&rdquo;</h3>
+          </div>
+          <p style="font-size:15px;color:var(--dim);line-height:1.62;margin:0 0 20px;">You spent an hour getting Claude up to speed on your codebase. Tomorrow you open the project and it has no idea what you were doing — you re-explain the branch, the half-finished feature, the failing test. Ten minutes gone before you&rsquo;ve written a line. And when the context window fills mid-task, you lose the thread entirely.</p>
+          <a href="#skills" style="margin-top:auto;display:inline-flex;align-items:center;gap:9px;padding:11px 15px;border-radius:12px;background:rgba(167,139,250,.10);border:1px solid var(--border2);font-size:14px;font-weight:600;width:fit-content;">Fixed by <span style="font-family:var(--font-m);color:var(--a1);">continuation</span> →</a>
+        </article>
+        <article class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;">
+            <span style="width:38px;height:38px;border-radius:11px;background:rgba(34,211,238,.14);border:1px solid var(--border2);display:grid;place-items:center;color:var(--a2);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></span>
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:22px;letter-spacing:-.02em;margin:0;">&ldquo;It does one thing at a time.&rdquo;</h3>
+          </div>
+          <p style="font-size:15px;color:var(--dim);line-height:1.62;margin:0 0 20px;">You&rsquo;ve got an epic split into five independent chunks, or nine changes to ship before a deadline. One Claude session grinds through them sequentially, and a single context window caps how far it gets. Subagents help — but they die when your chat does.</p>
+          <a href="#skills" style="margin-top:auto;display:inline-flex;align-items:center;gap:9px;padding:11px 15px;border-radius:12px;background:rgba(34,211,238,.10);border:1px solid var(--border2);font-size:14px;font-weight:600;width:fit-content;">Fixed by <span style="font-family:var(--font-m);color:var(--a2);">agent-army</span> →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" aria-labelledby="skills-h" style="max-width:1200px;margin:0 auto;padding:50px 24px 60px;scroll-margin-top:84px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:34px;">
+        <div style="max-width:620px;">
+          <div style="font-family:var(--font-m);font-size:13px;color:var(--a2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// the skills</div>
+          <h2 id="skills-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1;margin:0 0 14px;">The skills</h2>
+          <p style="font-size:15.5px;color:var(--dim);line-height:1.55;margin:0;">Each one is a complete, standalone plugin. Copy the command, paste it into Claude Code, done. Take one, take both, mix and match.</p>
+        </div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;">
+          <button class="cs-chip active" data-filter="All">All</button>
+          <button class="cs-chip" data-filter="Orchestration">Orchestration</button>
+          <button class="cs-chip" data-filter="Sessions">Sessions</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr;gap:22px;">
+
+        <!-- agent-army -->
+        <article class="cs-card cs-skill cs-skillcard" data-cat="Orchestration" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:0 14px 40px rgba(0,0,0,.3);">
+          <div style="border-radius:15px;overflow:hidden;background:linear-gradient(160deg,rgba(167,139,250,.12),rgba(34,211,238,.05));border:1px solid var(--border);padding:18px 20px;display:flex;align-items:center;">
+            <svg viewBox="0 0 340 150" role="img" aria-labelledby="svg-army-t" style="width:100%;height:auto;display:block;">
+              <title id="svg-army-t">Diagram of agent-army: a master command centre coordinating parallel Claude agents, each in its own git worktree, merging into one integration branch</title>
+              <defs><linearGradient id="gArmy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+              <g fill="none" stroke="url(#gArmy)" stroke-width="1.6" opacity=".6">
+                <path d="M60 75 C100 75 100 25 140 25"/><path d="M60 75 C100 75 100 57 140 57"/><path d="M60 75 C100 75 100 89 140 89"/><path d="M60 75 C100 75 100 121 140 121"/>
+                <path d="M240 25 C276 25 276 75 287 75"/><path d="M240 57 C276 57 276 75 287 75"/><path d="M240 89 C276 89 276 75 287 75"/><path d="M240 121 C276 121 276 75 287 75"/>
+              </g>
+              <rect x="14" y="56" width="46" height="38" rx="10" fill="rgba(167,139,250,.18)" stroke="url(#gArmy)" stroke-width="1.4"/>
+              <circle cx="37" cy="69" r="2.4" fill="#fff"/><line x1="28" y1="79" x2="46" y2="79" stroke="#fff" stroke-width="1.4" opacity=".6"/><line x1="28" y1="84" x2="42" y2="84" stroke="#fff" stroke-width="1.4" opacity=".4"/>
+              <g>
+                <rect x="140" y="13" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="25" r="3.4" fill="#34d399"/>
+                <rect x="140" y="45" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="57" r="3.4" fill="#34d399"/>
+                <rect x="140" y="77" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="89" r="3.4" fill="#fbbf24"/>
+                <rect x="140" y="109" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="121" r="3.4" fill="#34d399"/>
+              </g>
+              <g fill="#fff" opacity=".5"><circle cx="150" cy="20" r="1.4"/><circle cx="155" cy="20" r="1.4"/><circle cx="160" cy="20" r="1.4"/><circle cx="150" cy="52" r="1.4"/><circle cx="155" cy="52" r="1.4"/><circle cx="160" cy="52" r="1.4"/><circle cx="150" cy="84" r="1.4"/><circle cx="155" cy="84" r="1.4"/><circle cx="160" cy="84" r="1.4"/><circle cx="150" cy="116" r="1.4"/><circle cx="155" cy="116" r="1.4"/><circle cx="160" cy="116" r="1.4"/></g>
+              <circle cx="302" cy="75" r="16" fill="rgba(34,211,238,.18)" stroke="url(#gArmy)" stroke-width="1.6"/>
+              <path d="M296 75 l4 4 l8 -9" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div style="display:flex;flex-direction:column;min-width:0;">
+            <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+              <span style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 22px rgba(167,139,250,.4);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a0a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="agent-army icon"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+              </span>
+              <div style="min-width:0;">
+                <div style="font-family:var(--font-m);font-weight:600;font-size:18px;letter-spacing:-.01em;">agent-army</div>
+                <span style="display:inline-block;margin-top:4px;font-size:11.5px;font-family:var(--font-m);color:var(--a2);padding:2px 9px;border:1px solid var(--border2);border-radius:100px;background:var(--surface);">Orchestration</span>
+              </div>
+            </div>
+
+            <p style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 12px;line-height:1.4;">Run a fleet of autonomous Claude agents in parallel.</p>
+
+            <div style="display:flex;align-items:flex-start;gap:9px;padding:10px 13px;font-size:12.5px;background:rgba(190,242,100,.06);border:1px solid rgba(190,242,100,.18);border-radius:11px;margin-bottom:18px;line-height:1.45;">
+              <span style="color:var(--lime);flex-shrink:0;">✦</span><span style="color:var(--dim);"><strong style="color:var(--text);font-weight:600;">The problem it kills:</strong> Big multi-stream work done one-at-a-time is slow — and one context window is the ceiling.</span>
+            </div>
+
+            <div style="font-family:var(--font-m);font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px;">How it works</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span>One agent per task — each in its own git worktree, building in parallel.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span>On-disk command centre survives context limits and session handoffs.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span>Two-signal health checks catch silent stalls and failed launches.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span>Intake Gate talks you out of a fleet when a cheaper tool fits.</span></div>
+            </div>
+
+            <div style="margin-top:auto;">
+              <div style="display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 13px;margin-bottom:14px;">
+                <span style="color:var(--a2);font-family:var(--font-m);font-size:13px;">$</span>
+                <code style="flex:1;color:var(--text);font-size:12.5px;white-space:nowrap;overflow:auto;">/plugin install agent-army@amjad1233</code>
+                <button class="cs-copy" data-copy="/plugin install agent-army@amjad1233" aria-label="Copy install command" style="border:none;border-radius:8px;padding:8px 13px;font-family:var(--font-b);font-size:12.5px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;"><span>Copy</span></button>
+              </div>
+              <div style="display:flex;gap:18px;font-size:13px;font-weight:600;">
+                <a class="cs-link" href="agent-army/" style="color:var(--a2);">Full guide →</a>
+                <a class="cs-link" href="https://github.com/amjad1233/ai-skills/tree/main/agent-army" target="_blank" rel="noopener" style="color:var(--text);">Source ↗</a>
+                <a class="cs-link" href="https://amjad1233.github.io/agent-army-skill/" target="_blank" rel="noopener" style="color:var(--a1);">Visual explainer ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- continuation -->
+        <article class="cs-card cs-skill cs-skillcard" data-cat="Sessions" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:0 14px 40px rgba(0,0,0,.3);">
+          <div style="border-radius:15px;overflow:hidden;background:linear-gradient(160deg,rgba(167,139,250,.12),rgba(34,211,238,.05));border:1px solid var(--border);padding:18px 20px;display:flex;align-items:center;">
+            <svg viewBox="0 0 340 150" role="img" aria-labelledby="svg-cont-t" style="width:100%;height:auto;display:block;">
+              <title id="svg-cont-t">Diagram of continuation: a session handoff note saved to disk on Day 1 and read back on Day 2, so Claude resumes with no recap</title>
+              <defs><linearGradient id="gCont" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+              <path d="M30 28 a9 9 0 1 0 7 14 a7 7 0 0 1 -7 -14 z" fill="#c4b5fd" opacity=".85"/>
+              <g stroke="#bef264" stroke-width="1.5" opacity=".9"><circle cx="312" cy="30" r="6" fill="none"/><line x1="312" y1="18" x2="312" y2="21"/><line x1="312" y1="39" x2="312" y2="42"/><line x1="300" y1="30" x2="303" y2="30"/><line x1="321" y1="30" x2="324" y2="30"/><line x1="303" y1="21" x2="305" y2="23"/><line x1="319" y1="37" x2="321" y2="39"/></g>
+              <rect x="16" y="46" width="120" height="80" rx="11" fill="rgba(255,255,255,.04)" stroke="var(--border2)"/>
+              <g fill="#fff" opacity=".5"><circle cx="28" cy="58" r="2.2"/><circle cx="35" cy="58" r="2.2"/><circle cx="42" cy="58" r="2.2"/></g>
+              <line x1="28" y1="76" x2="100" y2="76" stroke="#fff" stroke-width="1.4" opacity=".4"/><line x1="28" y1="86" x2="118" y2="86" stroke="#fff" stroke-width="1.4" opacity=".3"/><line x1="28" y1="96" x2="84" y2="96" stroke="#fff" stroke-width="1.4" opacity=".3"/><line x1="28" y1="106" x2="104" y2="106" stroke="#fff" stroke-width="1.4" opacity=".25"/>
+              <line class="cs-flow" x1="170" y1="34" x2="170" y2="138" stroke="var(--border2)" stroke-width="1.6"/>
+              <line x1="136" y1="86" x2="153" y2="86" stroke="url(#gCont)" stroke-width="1.8"/>
+              <line x1="187" y1="86" x2="200" y2="86" stroke="url(#gCont)" stroke-width="1.8"/><path d="M200 82 l5 4 l-5 4" fill="none" stroke="url(#gCont)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="152" y="74" width="36" height="24" rx="6" fill="url(#gCont)"/><line x1="158" y1="82" x2="182" y2="82" stroke="#0a0a12" stroke-width="1.5"/><line x1="158" y1="87" x2="178" y2="87" stroke="#0a0a12" stroke-width="1.5"/><line x1="158" y1="92" x2="180" y2="92" stroke="#0a0a12" stroke-width="1.5"/>
+              <rect x="204" y="46" width="120" height="80" rx="11" fill="rgba(34,211,238,.07)" stroke="url(#gCont)" stroke-width="1.6"/>
+              <g fill="#fff" opacity=".6"><circle cx="216" cy="58" r="2.2"/><circle cx="223" cy="58" r="2.2"/><circle cx="230" cy="58" r="2.2"/></g>
+              <line x1="216" y1="76" x2="288" y2="76" stroke="#fff" stroke-width="1.4" opacity=".5"/><line x1="216" y1="86" x2="306" y2="86" stroke="#fff" stroke-width="1.4" opacity=".4"/><line x1="216" y1="96" x2="272" y2="96" stroke="#fff" stroke-width="1.4" opacity=".4"/>
+              <circle cx="300" cy="110" r="9" fill="rgba(190,242,100,.2)" stroke="#bef264" stroke-width="1.4"/><path d="M295 110 l3 3 l6 -7" fill="none" stroke="#bef264" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="76" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(244,245,251,.5)">Day 1</text>
+              <text x="264" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(244,245,251,.5)">Day 2 · resumed</text>
+            </svg>
+          </div>
+
+          <div style="display:flex;flex-direction:column;min-width:0;">
+            <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+              <span style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 22px rgba(167,139,250,.4);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a0a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="continuation icon"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+              </span>
+              <div style="min-width:0;">
+                <div style="font-family:var(--font-m);font-weight:600;font-size:18px;letter-spacing:-.01em;">continuation</div>
+                <span style="display:inline-block;margin-top:4px;font-size:11.5px;font-family:var(--font-m);color:var(--a2);padding:2px 9px;border:1px solid var(--border2);border-radius:100px;background:var(--surface);">Sessions</span>
+              </div>
+            </div>
+
+            <p style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 12px;line-height:1.4;">Project memory for any coding agent — decisions, learnings, conventions and handoffs in <code>.continuation/</code>, written as you work, read in one hot file every session.</p>
+
+            <div style="display:flex;align-items:flex-start;gap:9px;padding:10px 13px;font-size:12.5px;background:rgba(190,242,100,.06);border:1px solid rgba(190,242,100,.18);border-radius:11px;margin-bottom:18px;line-height:1.45;">
+              <span style="color:var(--lime);flex-shrink:0;">✦</span><span style="color:var(--dim);"><strong style="color:var(--text);font-weight:600;">The problem it kills:</strong> Every new session starts from amnesia; context limits make you lose your place.</span>
+            </div>
+
+            <div style="font-family:var(--font-m);font-size:11px;color:var(--mute);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px;">How it works</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span><code style="color:var(--a1);font-size:12.5px;font-weight:600;">/end</code> — save a handoff: done, pending, next step, key files.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span><code style="color:var(--a1);font-size:12.5px;font-weight:600;">/continue</code> — resume in ~5s with your git state checked.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span><code style="color:var(--a1);font-size:12.5px;font-weight:600;">/next</code> — open the next session in a fresh, worktree-aware terminal.</span></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--dim);"><span style="color:var(--a2);margin-top:1px;flex-shrink:0;">▸</span><span>Local-only, zero dependencies — nothing leaves your machine.</span></div>
+            </div>
+
+            <div style="margin-top:auto;">
+              <div style="display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 13px;margin-bottom:14px;">
+                <span style="color:var(--a2);font-family:var(--font-m);font-size:13px;">$</span>
+                <code style="flex:1;color:var(--text);font-size:12.5px;white-space:nowrap;overflow:auto;">/plugin install continuation@amjad1233</code>
+                <button class="cs-copy" data-copy="/plugin install continuation@amjad1233" aria-label="Copy install command" style="border:none;border-radius:8px;padding:8px 13px;font-family:var(--font-b);font-size:12.5px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;"><span>Copy</span></button>
+              </div>
+              <div style="display:flex;gap:18px;font-size:13px;font-weight:600;">
+                <a class="cs-link" href="continuation/" style="color:var(--a2);">Full guide →</a>
+                <a class="cs-link" href="https://github.com/amjad1233/ai-skills/tree/main/continuation" target="_blank" rel="noopener" style="color:var(--text);">Source ↗</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article data-reveal style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;border:1.5px dashed var(--border2);border-radius:22px;padding:24px 28px;background:rgba(255,255,255,.015);">
+          <div style="display:flex;align-items:center;gap:16px;min-width:0;">
+            <span style="width:44px;height:44px;border-radius:13px;border:1.5px dashed var(--border2);display:grid;place-items:center;color:var(--dim);flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+            <div>
+              <h3 style="font-family:var(--font-d);font-weight:700;font-size:20px;margin:0 0 4px;letter-spacing:-.02em;">More skills incoming</h3>
+              <p style="font-size:13.5px;color:var(--dim);line-height:1.5;margin:0;">A new skill is just a subdirectory and one line of config. Contributions welcome.</p>
+            </div>
+          </div>
+          <a href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:11px;font-weight:600;font-size:14px;border:1px solid var(--border2);background:var(--surface);flex-shrink:0;"><span style="color:var(--lime);">★</span> Star &amp; contribute</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" aria-labelledby="how-h" style="max-width:1200px;margin:0 auto;padding:60px 24px;scroll-margin-top:84px;">
+      <div data-reveal style="display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;max-width:980px;margin:0 auto 44px;">
+        <div>
+          <div style="font-family:var(--font-m);font-size:13px;color:var(--a2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// how it works</div>
+          <h2 id="how-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.1rem);letter-spacing:-.03em;line-height:1.02;margin:0 0 16px;">How a skill works</h2>
+          <p style="font-size:15.5px;color:var(--dim);line-height:1.6;margin:0;">A skill teaches Claude Code a new way of working — a workflow, a set of commands — that it loads automatically, exactly when it&rsquo;s relevant. You don&rsquo;t memorise anything.</p>
+        </div>
+        <div style="border-radius:16px;background:linear-gradient(160deg,rgba(167,139,250,.10),rgba(34,211,238,.04));border:1px solid var(--border);padding:18px 20px;">
+          <svg viewBox="0 0 340 150" role="img" aria-labelledby="svg-sys-t" style="width:100%;height:auto;display:block;">
+            <title id="svg-sys-t">The ai-skills marketplace: a socket of modular skill tiles, two installed and empty slots ready for more</title>
+            <defs><linearGradient id="gSys" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+            <rect x="34" y="22" width="272" height="106" rx="16" fill="rgba(255,255,255,.025)" stroke="var(--border2)"/>
+            <rect x="54" y="40" width="70" height="32" rx="8" fill="url(#gSys)"/><g stroke="#0a0a12" stroke-width="1.5" fill="none"><line x1="79" y1="56" x2="73" y2="50"/><line x1="79" y1="56" x2="85" y2="50"/><line x1="79" y1="56" x2="73" y2="62"/><line x1="79" y1="56" x2="85" y2="62"/></g><g fill="#0a0a12"><circle cx="79" cy="56" r="2"/><circle cx="73" cy="50" r="1.6"/><circle cx="85" cy="50" r="1.6"/><circle cx="73" cy="62" r="1.6"/><circle cx="85" cy="62" r="1.6"/></g>
+            <rect x="135" y="40" width="70" height="32" rx="8" fill="url(#gSys)"/><path d="M192 50 A6 6 0 1 0 193 57" fill="none" stroke="#0a0a12" stroke-width="1.6" stroke-linecap="round"/><path d="M192 47 L193 51 L189 50.6" fill="none" stroke="#0a0a12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="216" y="40" width="70" height="32" rx="8" fill="none" stroke="var(--border2)" stroke-dasharray="4 4"/>
+            <rect x="54" y="86" width="70" height="32" rx="8" fill="none" stroke="var(--border2)" stroke-dasharray="4 4"/>
+            <rect x="135" y="86" width="70" height="32" rx="8" fill="none" stroke="var(--border2)" stroke-dasharray="4 4"/>
+            <rect x="216" y="86" width="70" height="32" rx="8" fill="none" stroke="var(--border2)" stroke-dasharray="4 4"/>
+            <rect x="244" y="6" width="56" height="26" rx="7" fill="rgba(190,242,100,.18)" stroke="#bef264" stroke-width="1.3"/><text x="272" y="23" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#bef264">+ skill</text>
+            <line class="cs-flow" x1="251" y1="34" x2="251" y2="86" stroke="#bef264" stroke-width="1.4"/><path d="M247 82 l4 5 l4 -5" fill="none" stroke="#bef264" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;align-items:stretch;">
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);border:1px solid var(--border);border-radius:18px;padding:24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:15px;color:var(--a1);margin-bottom:12px;">STEP 01</div>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:20px;margin:0 0 8px;letter-spacing:-.02em;">Add the marketplace</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0 0 16px;">One time. Registers <span style="font-family:var(--font-m);color:var(--a2);">@amjad1233</span> with your Claude Code.</p>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:11px;padding:8px 8px 8px 12px;">
+            <code style="flex:1;color:var(--text);font-size:12px;white-space:nowrap;overflow:auto;">/plugin marketplace add amjad1233/ai-skills</code>
+            <button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" data-copied="✓" aria-label="Copy command" style="border:none;border-radius:8px;padding:7px 12px;font-family:var(--font-b);font-size:12px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;"><span>Copy</span></button>
+          </div>
+        </div>
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);border:1px solid var(--border);border-radius:18px;padding:24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:15px;color:var(--a2);margin-bottom:12px;">STEP 02</div>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:20px;margin:0 0 8px;letter-spacing:-.02em;">Install a skill</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0 0 16px;">Whichever you want. Installs in seconds, ready immediately.</p>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:11px;padding:8px 8px 8px 12px;">
+            <code style="flex:1;color:var(--text);font-size:12px;white-space:nowrap;overflow:auto;">/plugin install agent-army@amjad1233</code>
+            <button class="cs-copy" data-copy="/plugin install agent-army@amjad1233" data-copied="✓" aria-label="Copy command" style="border:none;border-radius:8px;padding:7px 12px;font-family:var(--font-b);font-size:12px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;"><span>Copy</span></button>
+          </div>
+        </div>
+        <div class="cs-card" data-reveal style="background:linear-gradient(135deg,rgba(167,139,250,.12),rgba(34,211,238,.08));border:1px solid var(--border2);border-radius:18px;padding:24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:15px;color:var(--a3);margin-bottom:12px;">STEP 03</div>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:20px;margin:0 0 8px;letter-spacing:-.02em;">Just ask Claude</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0 0 16px;">In plain English. The skill kicks in when it fits — nothing to memorise.</p>
+          <div style="font-family:var(--font-b);font-size:14px;font-style:italic;color:var(--text);background:rgba(0,0,0,.35);border-left:2px solid var(--a3);border-radius:8px;padding:12px 14px;line-height:1.5;">&ldquo;Claude, pick up where we left off and ship the next three changes.&rdquo;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET STARTED -->
+    <section id="start" aria-labelledby="start-h" style="max-width:900px;margin:0 auto;padding:60px 24px;scroll-margin-top:84px;">
+      <div data-reveal style="text-align:center;margin-bottom:36px;">
+        <div style="font-family:var(--font-m);font-size:13px;color:var(--a2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// get started</div>
+        <h2 id="start-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1;margin:0 0 14px;">Get started in ~30 seconds</h2>
+        <p style="font-size:16px;color:var(--dim);line-height:1.5;margin:0;">Never installed a Claude skill? This is the whole thing.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div data-reveal style="display:flex;gap:20px;align-items:flex-start;background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:26px;letter-spacing:-.03em;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;width:42px;">01</div>
+          <div style="flex:1;min-width:0;">
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.02em;">Get Claude Code</h3>
+            <p style="font-size:14px;color:var(--dim);line-height:1.5;margin:0 0 14px;">Anthropic&rsquo;s agentic coding CLI. Install and launch it if you haven&rsquo;t.</p>
+            <div style="display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 13px;">
+              <span style="color:var(--a2);font-family:var(--font-m);font-size:13px;">$</span>
+              <code style="flex:1;color:var(--text);font-size:13px;white-space:nowrap;overflow:auto;">claude</code>
+              <button class="cs-copy" data-copy="claude" aria-label="Copy command" style="border:none;border-radius:8px;padding:8px 14px;font-family:var(--font-b);font-size:13px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;"><span>Copy</span></button>
+            </div>
+          </div>
+        </div>
+        <div data-reveal style="display:flex;gap:20px;align-items:flex-start;background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:26px;letter-spacing:-.03em;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;width:42px;">02</div>
+          <div style="flex:1;min-width:0;">
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.02em;">Add the marketplace</h3>
+            <p style="font-size:14px;color:var(--dim);line-height:1.5;margin:0 0 14px;">One time only. Registers the @amjad1233 marketplace with Claude Code.</p>
+            <div style="display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 13px;">
+              <span style="color:var(--a2);font-family:var(--font-m);font-size:13px;">$</span>
+              <code style="flex:1;color:var(--text);font-size:13px;white-space:nowrap;overflow:auto;">/plugin marketplace add amjad1233/ai-skills</code>
+              <button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" aria-label="Copy command" style="border:none;border-radius:8px;padding:8px 14px;font-family:var(--font-b);font-size:13px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;"><span>Copy</span></button>
+            </div>
+          </div>
+        </div>
+        <div data-reveal style="display:flex;gap:20px;align-items:flex-start;background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:26px;letter-spacing:-.03em;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;width:42px;">03</div>
+          <div style="flex:1;min-width:0;">
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.02em;">Install a skill</h3>
+            <p style="font-size:14px;color:var(--dim);line-height:1.5;margin:0 0 14px;">Pick whichever you want — it installs in seconds.</p>
+            <div style="display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:12px;padding:8px 8px 8px 13px;">
+              <span style="color:var(--a2);font-family:var(--font-m);font-size:13px;">$</span>
+              <code style="flex:1;color:var(--text);font-size:13px;white-space:nowrap;overflow:auto;">/plugin install continuation@amjad1233</code>
+              <button class="cs-copy" data-copy="/plugin install continuation@amjad1233" aria-label="Copy command" style="border:none;border-radius:8px;padding:8px 14px;font-family:var(--font-b);font-size:13px;font-weight:600;color:#0a0a12;background:linear-gradient(120deg,var(--a1),var(--a2));cursor:pointer;white-space:nowrap;"><span>Copy</span></button>
+            </div>
+          </div>
+        </div>
+        <div data-reveal style="display:flex;gap:20px;align-items:flex-start;background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:var(--font-d);font-weight:700;font-size:26px;letter-spacing:-.03em;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;width:42px;">04</div>
+          <div style="flex:1;min-width:0;">
+            <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.02em;">Use it</h3>
+            <p style="font-size:14px;color:var(--dim);line-height:1.5;margin:0 0 14px;">A slash command, or just ask in plain English. The skill kicks in when it fits.</p>
+            <div style="font-family:var(--font-m);font-size:13px;color:var(--text);background:rgba(0,0,0,.35);border-left:2px solid var(--a3);border-radius:8px;padding:12px 14px;line-height:1.6;">&ldquo;/continue&rdquo;&nbsp;&nbsp;·&nbsp;&nbsp;&ldquo;spin up an agent army for these five changes&rdquo;</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section id="why" aria-labelledby="why-h" style="max-width:1200px;margin:0 auto;padding:60px 24px;scroll-margin-top:84px;">
+      <div data-reveal style="text-align:center;max-width:640px;margin:0 auto 38px;">
+        <div style="font-family:var(--font-m);font-size:13px;color:var(--a2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// why ai-skills</div>
+        <h2 id="why-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1;margin:0;">Why ai-skills</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;">
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:26px;">
+          <span style="width:44px;height:44px;border-radius:12px;background:rgba(167,139,250,.12);border:1px solid var(--border2);display:grid;place-items:center;color:var(--a1);margin-bottom:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 8px;letter-spacing:-.02em;">Battle-tested, not vibes.</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0;">Every skill is hardened on real multi-day work — documented lessons, not guesses.</p>
+        </div>
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:26px;">
+          <span style="width:44px;height:44px;border-radius:12px;background:rgba(34,211,238,.12);border:1px solid var(--border2);display:grid;place-items:center;color:var(--a2);margin-bottom:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"/><path d="M12 12v3"/></svg></span>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 8px;letter-spacing:-.02em;">Open-source &amp; MIT.</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0;">Read it, fork it, ship it. No lock-in.</p>
+        </div>
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:26px;">
+          <span style="width:44px;height:44px;border-radius:12px;background:rgba(232,121,249,.12);border:1px solid var(--border2);display:grid;place-items:center;color:var(--a3);margin-bottom:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 8px;letter-spacing:-.02em;">Zero overhead.</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0;">Skills load only when relevant and stay out of your way.</p>
+        </div>
+        <div class="cs-card" data-reveal style="background:rgba(13,13,24,.5);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:26px;">
+          <span style="width:44px;height:44px;border-radius:12px;background:rgba(190,242,100,.12);border:1px solid var(--border2);display:grid;place-items:center;color:var(--lime);margin-bottom:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+          <h3 style="font-family:var(--font-d);font-weight:600;font-size:19px;margin:0 0 8px;letter-spacing:-.02em;">One marketplace, growing.</h3>
+          <p style="font-size:14px;color:var(--dim);line-height:1.55;margin:0;">Add it once; new skills appear as you go.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY CTA -->
+    <section id="contribute" aria-labelledby="contribute-h" style="max-width:1100px;margin:0 auto;padding:50px 24px 80px;scroll-margin-top:84px;">
+      <div data-reveal style="position:relative;overflow:hidden;border:1px solid var(--border2);border-radius:26px;background:linear-gradient(135deg,rgba(167,139,250,.16),rgba(34,211,238,.10) 60%,rgba(232,121,249,.12));padding:clamp(36px,6vw,64px);text-align:center;">
+        <h2 id="contribute-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.6vw,3.2rem);letter-spacing:-.03em;line-height:1;margin:0 0 16px;">More skills incoming</h2>
+        <p style="font-size:17px;color:var(--dim);line-height:1.55;max-width:600px;margin:0 auto 30px;">This marketplace grows. A new skill is just another subdirectory and one line of config. Star the repo to catch them, or open a PR with your own.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:13px;justify-content:center;">
+          <a href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:13px;font-weight:600;font-size:16px;color:#0a0a12;background:var(--text);"><span style="color:#e3a008;">★</span> Star on GitHub</a>
+          <a href="https://github.com/amjad1233/ai-skills/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border:1px solid var(--border2);border-radius:13px;font-weight:600;font-size:16px;background:var(--surface);color:var(--text);">Contribute ↗</a>
+        </div>
+      </div>
+    </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="border-top:1px solid var(--border);background:rgba(7,7,16,.6);backdrop-filter:blur(14px);">
+      <div style="max-width:1200px;margin:0 auto;padding:46px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;align-items:start;">
+        <div>
+          <a href="#top" style="display:flex;align-items:center;gap:11px;font-family:var(--font-d);font-weight:700;font-size:18px;letter-spacing:-.02em;margin-bottom:14px;">
+            <span style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;font-family:var(--font-m);font-weight:600;color:#0a0a12;font-size:15px;">/</span>
+            ai-skills
+          </a>
+          <p style="font-size:13.5px;color:var(--mute);line-height:1.6;margin:0 0 16px;max-width:280px;">Open-source plugins for Claude Code. Memory across sessions, parallelism that survives context limits. Add the marketplace, install a skill, just ask.</p>
+          <p style="font-size:13.5px;color:var(--dim);line-height:1.6;margin:0;">Built &amp; maintained by <a class="cs-link" href="https://github.com/amjad1233" target="_blank" rel="noopener" style="color:var(--text);font-weight:600;">Amjad Pathan</a>.</p>
+        </div>
+        <nav aria-label="Footer">
+          <div style="font-family:var(--font-m);font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Navigate</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;">
+            <a class="cs-link" href="#skills">Skills</a>
+            <a class="cs-link" href="#problem">The problem</a>
+            <a class="cs-link" href="#how">How it works</a>
+            <a class="cs-link" href="#start">Get started</a>
+            <a class="cs-link" href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener">Docs</a>
+          </div>
+        </nav>
+        <div>
+          <div style="font-family:var(--font-m);font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Project</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;">
+            <a class="cs-link" href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener">GitHub repo ↗</a>
+            <a class="cs-link" href="https://github.com/amjad1233/ai-skills/blob/main/LICENSE" target="_blank" rel="noopener">MIT licensed</a>
+            <a class="cs-link" href="https://github.com/amjad1233" target="_blank" rel="noopener">Built by @amjad1233</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding:18px 24px;max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:12.5px;color:var(--mute);font-family:var(--font-m);">
+        <span>© 2026 Amjad Pathan · ai-skills · MIT licensed</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>Made with Claude Code</span>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---- copy to clipboard ----
+  function fallback(text){ try{ var t=document.createElement('textarea'); t.value=text; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }catch(e){} }
+  document.querySelectorAll('.cs-copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      var copied = btn.getAttribute('data-copied') || 'Copied ✓';
+      var orig = btn.innerHTML;
+      var show = function(){ btn.innerHTML = '<span>'+copied+'</span>'; clearTimeout(btn._t); btn._t = setTimeout(function(){ btn.innerHTML = orig; }, 1700); };
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(show, function(){ fallback(text); show(); }); }
+      else { fallback(text); show(); }
+    });
+  });
+
+  // ---- mobile menu ----
+  var burger = document.getElementById('cs-burger');
+  var menu = document.getElementById('cs-menu');
+  if (burger && menu){
+    var setMenu = function(open){ menu.style.display = open ? 'flex' : 'none'; burger.setAttribute('aria-expanded', open?'true':'false'); };
+    burger.addEventListener('click', function(){ setMenu(menu.style.display === 'none'); });
+    menu.querySelectorAll('a, .cs-copy').forEach(function(el){ el.addEventListener('click', function(){ setMenu(false); }); });
+    window.addEventListener('resize', function(){ if (window.innerWidth > 980) setMenu(false); });
+  }
+
+  // ---- nav scroll state ----
+  var nav = document.querySelector('.cs-nav');
+  var onScroll = function(){ if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+  window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+  // ---- skill filter chips ----
+  var chips = document.querySelectorAll('.cs-chip');
+  var cards = document.querySelectorAll('.cs-skillcard');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var f = chip.getAttribute('data-filter');
+      chips.forEach(function(c){ c.classList.toggle('active', c===chip); });
+      cards.forEach(function(card){
+        var show = (f === 'All' || card.getAttribute('data-cat') === f);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  // ---- reveal on scroll ----
+  try {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+    requestAnimationFrame(function(){ document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); }); });
+  } catch(e){ document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); }); }
+
+  // ---- three.js glass hero (graceful fallback to CSS gradient mesh) ----
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce){
+    var tries = 0;
+    (function wait(){
+      if (!window.THREE){ if (tries++ < 90) setTimeout(wait, 80); return; }
+      try { buildScene(window.THREE); } catch(e){ /* CSS gradient mesh stays */ }
+    })();
+  }
+  function buildScene(THREE){
+    var host = document.getElementById('cs-fx');
+    if (!host) return;
+    var w = function(){ return host.clientWidth || window.innerWidth; };
+    var h = function(){ return host.clientHeight || window.innerHeight; };
+    var renderer = new THREE.WebGLRenderer({ alpha:true, antialias:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setSize(w(), h());
+    Object.assign(renderer.domElement.style, { position:'absolute', inset:'0', width:'100%', height:'100%' });
+    host.appendChild(renderer.domElement);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, w()/h(), 0.1, 100);
+    camera.position.set(0, 0, 9);
+
+    var c = document.createElement('canvas'); c.width=128; c.height=256;
+    var g = c.getContext('2d');
+    var grad = g.createLinearGradient(0,0,0,256);
+    grad.addColorStop(0,'#3b1d6e'); grad.addColorStop(0.45,'#0a0a16'); grad.addColorStop(0.55,'#0a0a16'); grad.addColorStop(1,'#0b3b52');
+    g.fillStyle=grad; g.fillRect(0,0,128,256);
+    g.fillStyle='rgba(232,121,249,0.55)'; g.beginPath(); g.arc(38,58,28,0,7); g.fill();
+    g.fillStyle='rgba(34,211,238,0.5)'; g.beginPath(); g.arc(96,184,30,0,7); g.fill();
+    g.fillStyle='rgba(190,242,100,0.35)'; g.beginPath(); g.arc(64,128,18,0,7); g.fill();
+    var tex = new THREE.CanvasTexture(c); tex.mapping = THREE.EquirectangularReflectionMapping;
+    var pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromEquirectangular(tex).texture;
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    var l1 = new THREE.PointLight(0xa78bfa, 45, 50); l1.position.set(-6,5,6); scene.add(l1);
+    var l2 = new THREE.PointLight(0x22d3ee, 45, 50); l2.position.set(6,-4,6); scene.add(l2);
+    var l3 = new THREE.PointLight(0xe879f9, 32, 50); l3.position.set(0,6,-4); scene.add(l3);
+
+    var mat = function(color){ return new THREE.MeshPhysicalMaterial({
+      color:color, metalness:0, roughness:0.06, transmission:1, thickness:1.6, ior:1.35,
+      clearcoat:1, clearcoatRoughness:0.1, iridescence:1, iridescenceIOR:1.3,
+      transparent:true, envMapIntensity:1.5, attenuationDistance:4, attenuationColor:new THREE.Color(color)
+    }); };
+
+    var group = new THREE.Group(); scene.add(group);
+    var defs = [
+      { geo:new THREE.IcosahedronGeometry(1.3,0), pos:[2.7,0.7,0], col:0xc4b5fd },
+      { geo:new THREE.OctahedronGeometry(0.9,0), pos:[4.2,-1.7,-1], col:0x67e8f9 },
+      { geo:new THREE.TorusGeometry(0.72,0.28,32,90), pos:[1.6,-2.1,-0.4], col:0xf0abfc },
+      { geo:new THREE.DodecahedronGeometry(0.72,0), pos:[3.5,2.0,-1.6], col:0xbef264 }
+    ];
+    var meshes = defs.map(function(d){ var m=new THREE.Mesh(d.geo, mat(d.col)); m.position.set(d.pos[0],d.pos[1],d.pos[2]); m.userData.sp=Math.random()*6; group.add(m); return m; });
+    if (w() < 760) group.scale.setScalar(0.62);
+
+    var mx=0,my=0,tx=0,ty=0;
+    var mm = function(e){ tx=(e.clientX/window.innerWidth)*2-1; ty=(e.clientY/window.innerHeight)*2-1; };
+    window.addEventListener('pointermove', mm, { passive:true });
+    var rsz = function(){ camera.aspect=w()/h(); camera.updateProjectionMatrix(); renderer.setSize(w(),h()); };
+    window.addEventListener('resize', rsz);
+
+    var clock = new THREE.Clock();
+    var running = !document.hidden, raf;
+    var loop = function(){
+      if (!running) return;
+      raf = requestAnimationFrame(loop);
+      var t = clock.getElapsedTime();
+      mx += (tx-mx)*0.04; my += (ty-my)*0.04;
+      group.rotation.y = mx*0.3; group.rotation.x = my*0.2;
+      group.position.x = mx*0.5; group.position.y = -my*0.35;
+      meshes.forEach(function(m,i){ m.rotation.x=t*0.14+i; m.rotation.y=t*0.11+i; m.position.y += Math.sin(t*0.6+m.userData.sp)*0.0017; });
+      renderer.render(scene, camera);
+    };
+    document.addEventListener('visibilitychange', function(){ running = !document.hidden; if (running) loop(); });
+    loop();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in a skill or the marketplace isn't working as expected.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **Do not paste secrets, tokens, or personal data** — redact logs first.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill?
+      options:
+        - agent-army
+        - continuation
+        - marketplace / install
+        - website
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. /plugin install ...
+        2. ...
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Claude Code version, OS, plugin version"
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: I have removed any secrets, tokens, or personal data from this report.
+          required: true

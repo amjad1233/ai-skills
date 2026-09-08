@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agent-army — run a fleet of autonomous Claude Code agents in parallel</title>
+<meta name="description" content="agent-army is a Claude Code skill that runs a fleet of autonomous agents in parallel — one per independent seam, each in its own git worktree, coordinated by a master through an on-disk command centre. What it does, when to use it, and how.">
+<meta name="keywords" content="agent-army, Claude Code skill, parallel Claude agents, git worktree, agent orchestration, autonomous AI agents, command centre">
+<meta name="author" content="Amjad Pathan">
+<link rel="canonical" href="https://claude-skills.amjad1233.com/agent-army/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://claude-skills.amjad1233.com/agent-army/">
+<meta property="og:title" content="agent-army — a fleet of autonomous Claude Code agents in parallel">
+<meta property="og:description" content="One agent per independent seam, each in its own git worktree, coordinated by a master through an on-disk command centre that survives context limits.">
+<meta property="og:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta name="theme-color" content="#070710">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"agent-army — run a fleet of autonomous Claude Code agents in parallel","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"about":{"@type":"SoftwareApplication","name":"agent-army","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT"},"url":"https://claude-skills.amjad1233.com/agent-army/","publisher":{"@type":"Person","name":"Amjad Pathan"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/skill.css">
+<script defer src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+<script defer src="../assets/skill.js"></script>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div id="fx"></div><div class="vignette"></div></div>
+
+<nav class="sk-nav" aria-label="Primary">
+  <div class="row">
+    <a class="brand" href="../"><span class="logo">/</span> ai-skills</a>
+    <div class="links">
+      <a href="#what">What</a>
+      <a href="#w5h">5W·1H</a>
+      <a href="#how">How</a>
+      <a href="#when">When</a>
+      <a href="#start">Get started</a>
+    </div>
+    <button class="cs-copy cta" data-copy="/plugin install agent-army@amjad1233" data-copied="Copied ✓">Install agent-army</button>
+  </div>
+</nav>
+
+<header class="s-hero wrap">
+  <div class="crumb"><a href="../">ai-skills</a> <span>/</span> <span style="color:var(--text)">agent-army</span></div>
+  <span class="badge"><span class="dot" style="background:var(--a2);box-shadow:0 0 10px var(--a2)"></span> Orchestration · MIT · for Claude Code</span>
+  <h1>agent-army</h1>
+  <p class="lede"><strong>Run a fleet of autonomous Claude Code agents in parallel</strong> — one per independent chunk of work, each a full <code>claude</code> session in its own git worktree, coordinated by a changeable <strong>master</strong> through a <strong>command centre that lives on disk</strong>. The operation survives context limits and shift changes: any session can read the command centre and take command.</p>
+  <div class="hero-actions">
+    <a class="btn grad" href="#start">Get started →</a>
+    <a class="btn ghost" href="https://github.com/amjad1233/ai-skills/tree/main/agent-army" target="_blank" rel="noopener">Source ↗</a>
+    <a class="btn ghost" href="https://amjad1233.github.io/agent-army-skill/" target="_blank" rel="noopener">Visual explainer ↗</a>
+  </div>
+</header>
+
+<!-- FLEET DIAGRAM -->
+<section class="wrap" style="padding-top:14px;">
+  <div class="diagram float" data-reveal>
+    <svg viewBox="0 0 340 150" role="img" aria-labelledby="d-fleet" style="max-width:560px;margin:0 auto;">
+      <title id="d-fleet">A master command centre coordinating four parallel Claude agents, each in its own git worktree, merging into one integration branch</title>
+      <defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+      <g fill="none" stroke="url(#gA)" stroke-width="1.6" opacity=".6">
+        <path d="M60 75 C100 75 100 25 140 25"/><path d="M60 75 C100 75 100 57 140 57"/><path d="M60 75 C100 75 100 89 140 89"/><path d="M60 75 C100 75 100 121 140 121"/>
+        <path d="M240 25 C276 25 276 75 287 75"/><path d="M240 57 C276 57 276 75 287 75"/><path d="M240 89 C276 89 276 75 287 75"/><path d="M240 121 C276 121 276 75 287 75"/>
+      </g>
+      <rect x="14" y="56" width="46" height="38" rx="10" fill="rgba(167,139,250,.18)" stroke="url(#gA)" stroke-width="1.4"/>
+      <circle cx="37" cy="69" r="2.4" fill="#fff"/><line x1="28" y1="79" x2="46" y2="79" stroke="#fff" stroke-width="1.4" opacity=".6"/><line x1="28" y1="84" x2="42" y2="84" stroke="#fff" stroke-width="1.4" opacity=".4"/>
+      <g>
+        <rect x="140" y="13" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="25" r="3.4" fill="#34d399"/>
+        <rect x="140" y="45" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="57" r="3.4" fill="#34d399"/>
+        <rect x="140" y="77" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="89" r="3.4" fill="#fbbf24"/>
+        <rect x="140" y="109" width="100" height="24" rx="6" fill="rgba(255,255,255,.05)" stroke="var(--border2)"/><circle cx="232" cy="121" r="3.4" fill="#34d399"/>
+      </g>
+      <g fill="#fff" opacity=".5"><circle cx="150" cy="20" r="1.4"/><circle cx="155" cy="20" r="1.4"/><circle cx="160" cy="20" r="1.4"/><circle cx="150" cy="52" r="1.4"/><circle cx="155" cy="52" r="1.4"/><circle cx="160" cy="52" r="1.4"/><circle cx="150" cy="84" r="1.4"/><circle cx="155" cy="84" r="1.4"/><circle cx="160" cy="84" r="1.4"/><circle cx="150" cy="116" r="1.4"/><circle cx="155" cy="116" r="1.4"/><circle cx="160" cy="116" r="1.4"/></g>
+      <circle cx="302" cy="75" r="16" fill="rgba(34,211,238,.18)" stroke="url(#gA)" stroke-width="1.6"/>
+      <path d="M296 75 l4 4 l8 -9" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="cap">master command centre  →  N agents, one per worktree  →  merge into one integration branch</div>
+  </div>
+</section>
+
+<!-- WHAT -->
+<section id="what" class="wrap">
+  <div data-reveal><div class="kicker c">// what it is</div><h2 class="sec">What agent-army does</h2>
+  <p class="sec-lede">It's the <strong style="color:var(--text)">heavyweight, separate-session</strong> way to parallelise in Claude Code. Instead of one chat grinding through a backlog, you spawn <strong style="color:var(--text)">N full <code>claude</code> processes at once</strong> — each in its own terminal window/tmux pane, its own context window, its own git worktree — and a <strong style="color:var(--text)">master</strong> session coordinates them through an on-disk <strong style="color:var(--text)">command centre</strong>. Because the command centre is just files on disk (outside any repo), the whole operation outlives any single chat: a fresh session can read it and take command.</p></div>
+  <div class="two" style="margin-top:8px;">
+    <div class="glass pad" data-reveal>
+      <h3 class="sub">It nests with its cheaper cousins</h3>
+      <p style="color:var(--dim);font-size:14.5px;margin:0 0 14px;">agent-army isn't a rival to subagents — it sits one level up. Each fleet agent runs <em>its own</em> in-session subagents to keep its context lean.</p>
+      <ul class="blist">
+        <li><strong>In-session subagents</strong> — built-in, cheap, die with your chat.</li>
+        <li><strong>Workflow tool</strong> — scripted fan-out, worktree-isolated, ~10 concurrent.</li>
+        <li><strong>agent-army</strong> — N full sessions, real windows, survives everything.</li>
+      </ul>
+    </div>
+    <div class="diagram" data-reveal>
+      <svg viewBox="0 0 320 150" role="img" aria-labelledby="d-nest">
+        <title id="d-nest">Nesting: one agent-army window runs a coordinator that dispatches its own subagents internally</title>
+        <defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+        <rect x="10" y="16" width="300" height="118" rx="12" fill="rgba(255,255,255,.03)" stroke="url(#gN)" stroke-width="1.4"/>
+        <text x="24" y="36" font-family="JetBrains Mono, monospace" font-size="10" fill="#a78bfa">window · agent g2 (full claude session)</text>
+        <rect x="24" y="46" width="120" height="22" rx="6" fill="rgba(167,139,250,.16)" stroke="var(--border2)"/><text x="34" y="61" font-family="JetBrains Mono, monospace" font-size="9" fill="#f4f5fb">coordinator</text>
+        <g font-family="JetBrains Mono, monospace" font-size="9" fill="#cfe9ff">
+          <rect x="170" y="44" width="124" height="22" rx="6" fill="rgba(34,211,238,.10)" stroke="var(--border2)"/><text x="180" y="59">subagent · implement</text>
+          <rect x="170" y="72" width="124" height="22" rx="6" fill="rgba(34,211,238,.10)" stroke="var(--border2)"/><text x="180" y="87">subagent · test</text>
+          <rect x="170" y="100" width="124" height="22" rx="6" fill="rgba(34,211,238,.10)" stroke="var(--border2)"/><text x="180" y="115">subagent · review</text>
+        </g>
+        <g stroke="url(#gN)" stroke-width="1.3" fill="none" opacity=".7"><path d="M144 57 H170"/><path d="M84 68 C84 83 120 83 170 83"/><path d="M84 68 C84 100 120 111 170 111"/></g>
+      </svg>
+      <div class="cap">outer = parallelism + survival · inner = lean context per agent</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5W1H -->
+<section id="w5h" class="wrap">
+  <div data-reveal><div class="kicker p">// the 5 W&rsquo;s &amp; 1 H</div><h2 class="sec">Everything, at a glance</h2>
+  <p class="sec-lede">What it is, why it exists, when (and when not) to reach for it, who runs it, where its state lives, and how a run actually goes.</p></div>
+  <div class="w5h">
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(167,139,250,.14);color:var(--a1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+      <div class="tag">What</div><h3>A parallel agent fleet</h3>
+      <p>N autonomous Claude sessions, one per independent group of work, each isolated in its own git worktree and branch, coordinated by a master.</p>
+    </div>
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(34,211,238,.14);color:var(--a2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
+      <div class="tag">Why</div><h3>Wall-clock, windows, survival</h3>
+      <p>It buys three things nothing else does: N independent context windows, hours of true parallel building, and an operation that outlives any one chat. It trades ~N&times; the spend for that.</p>
+    </div>
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(232,121,249,.14);color:var(--a3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></div>
+      <div class="tag">When</div><h3>4&ndash;9 big independent seams</h3>
+      <p>Use it when work is already split into 4&ndash;9 substantial, independent streams, there&rsquo;s a real deadline, and a human will babysit. Not for small or coupled work &mdash; the Intake Gate routes those away.</p>
+    </div>
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(190,242,100,.14);color:var(--lime)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg></div>
+      <div class="tag">Who</div><h3>A master + its agents</h3>
+      <p>A <strong>master</strong> coordinates (spawns, monitors, unblocks, reviews, assembles &mdash; writes no feature code). The <strong>agents</strong> are semi-autonomous workers, one per seam. The master is swappable mid-run.</p>
+    </div>
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(167,139,250,.14);color:var(--a1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="tag">Where</div><h3>An on-disk command centre</h3>
+      <p>State lives in <code>~/.claude/agent-army/&lt;operation&gt;/</code> &mdash; outside any repo, referenced by absolute path. Agents work in their own worktrees and PR into one integration branch.</p>
+    </div>
+    <div class="cell" data-reveal>
+      <div class="ic" style="background:rgba(34,211,238,.14);color:var(--a2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
+      <div class="tag">How</div><h3>Gate → launch → monitor → assemble</h3>
+      <p>Run the Intake Gate, cut an integration branch, build the command centre, launch + verify each agent, monitor with two-signal health, then review and assemble one final PR.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW: lifecycle -->
+<section id="how" class="wrap">
+  <div data-reveal><div class="kicker c">// how it works</div><h2 class="sec">The operation lifecycle</h2>
+  <p class="sec-lede">Six phases, master-driven. It&rsquo;s semi-autonomous &mdash; the agents build on their own, but you check in to clear blocked decisions.</p></div>
+  <div class="steps">
+    <div class="step" data-reveal><div class="n">01</div><div class="body"><h3>Gather the seams</h3><p>Confirm the independent groups of work and each group&rsquo;s spec (an OpenSpec change or a markdown brief). One seam = one agent = one branch. Target 4&ndash;9.</p></div></div>
+    <div class="step" data-reveal><div class="n">02</div><div class="body"><h3>Cut an integration branch + pick models</h3><p>Branch off the agreed base; every agent PRs into it (never into main). Choose models per agent &mdash; <code>sonnet</code> is the cost/quality sweet spot when specs are written.</p></div></div>
+    <div class="step" data-reveal><div class="n">03</div><div class="body"><h3>Create the command centre</h3><p>Scaffold <code>~/.claude/agent-army/&lt;operation&gt;/</code> with <code>COMMAND.md</code>, <code>manifest.json</code>, and per-agent brief/status files. Give the operation a memorable codename.</p></div></div>
+    <div class="step" data-reveal><div class="n">04</div><div class="body"><h3>Launch &amp; verify</h3><p>Launch one agent per seam. <strong>Verify each is actually live within ~15s</strong> &mdash; never trust the launch exit code. Each agent self-creates its worktree as step one.</p>
+      <div class="term"><span class="dollar">$</span><code>scripts/launch-agent.sh &lt;operation&gt; &lt;agent&gt;</code><button class="cs-copy" data-copy="scripts/launch-agent.sh <operation> <agent>" data-copied="Copied ✓" aria-label="Copy">Copy</button></div></div></div>
+    <div class="step" data-reveal><div class="n">05</div><div class="body"><h3>Monitor (check in periodically)</h3><p>Read the objective health board; locate windows; clear <code>BLOCKED</code> questions; relaunch by reason; stop anything idle-burning.</p>
+      <div class="term" style="margin-bottom:9px;"><span class="dollar">$</span><code>scripts/fleet-status.sh &lt;operation&gt;</code><button class="cs-copy" data-copy="scripts/fleet-status.sh <operation>" data-copied="Copied ✓" aria-label="Copy">Copy</button></div>
+      <div class="term"><span class="dollar">$</span><code>scripts/where.sh &lt;operation&gt;</code><button class="cs-copy" data-copy="scripts/where.sh <operation>" data-copied="Copied ✓" aria-label="Copy">Copy</button></div></div></div>
+    <div class="step" data-reveal><div class="n">06</div><div class="body"><h3>Review &amp; assemble</h3><p>When agents are PR-OPEN, review each PR two-stage (spec-compliance, then code-quality) with in-session reviewer subagents, merge into the integration branch, run CI, open one final PR, then stop the fleet and archive the command centre.</p></div></div>
+  </div>
+</section>
+
+<!-- Two-signal truth -->
+<section class="wrap">
+  <div class="two">
+    <div data-reveal>
+      <div class="kicker l">// the source of truth</div>
+      <h2 class="sec" style="font-size:clamp(1.7rem,3.4vw,2.4rem)">Never trust a single signal</h2>
+      <p style="color:var(--dim);font-size:15px;line-height:1.65;">Agents stall silently at usage limits, commits lag reports, and launches lie about success. So health is <strong style="color:var(--text)">two signals together</strong>: what the agent reports, <em>and</em> an objective probe.</p>
+      <ul class="blist" style="margin-top:14px;">
+        <li><strong>Self-reported</strong> — the agent&rsquo;s own milestone status file.</li>
+        <li><strong>Objective</strong> — process alive? last commit age? transcript activity?</li>
+        <li><strong>Hardened liveness</strong> — alive if the PID runs, OR a process matches the brief path, OR a cwd is under the worktree. A live agent can&rsquo;t go invisible.</li>
+      </ul>
+    </div>
+    <div data-reveal>
+      <h3 class="sub" style="margin-bottom:14px;">Status the board can report</h3>
+      <div class="chips">
+        <span class="schip"><span class="dot" style="background:var(--ok)"></span>ALIVE</span>
+        <span class="schip"><span class="dot" style="background:var(--a1)"></span>BLOCKED</span>
+        <span class="schip"><span class="dot" style="background:var(--warn)"></span>STALLED</span>
+        <span class="schip"><span class="dot" style="background:var(--a3)"></span>DYING</span>
+        <span class="schip"><span class="dot" style="background:#ff5f57"></span>DEAD</span>
+        <span class="schip"><span class="dot" style="background:var(--warn)"></span>IDLE-BURN</span>
+        <span class="schip"><span class="dot" style="background:var(--ok)"></span>DONE</span>
+      </div>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px;">
+        <div class="callout note"><span class="ic">↻</span><span><strong>STALLED</strong> (alive, no progress) → relaunch with <code>--resume</code> — context is fine, just frozen at a usage limit.</span></div>
+        <div class="callout warn"><span class="ic">✦</span><span><strong>DYING / DEAD</strong> (context ran out) → relaunch <strong>fresh</strong>; the successor reads the continuation the agent wrote.</span></div>
+        <div class="callout good"><span class="ic">■</span><span><strong>IDLE-BURN</strong> (done but session still alive) → <code>stop-agent.sh</code> it. That&rsquo;s real money.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHEN / decision -->
+<section id="when" class="wrap">
+  <div data-reveal><div class="kicker p">// when to use it</div><h2 class="sec">When agent-army &mdash; and when not</h2>
+  <p class="sec-lede">A fleet costs roughly N full sessions. The skill opens with an <strong style="color:var(--text)">Intake Gate</strong> that does this maths and routes cheap work to a cheaper tool. Use this rule first.</p></div>
+  <table class="tbl" data-reveal>
+    <thead><tr><th>Shape of the work</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>4&ndash;9 big independent seams, need judgement + review, span hours/days, human babysits</td><td class="k" style="color:var(--a1)">agent-army</td></tr>
+      <tr><td>Many small, mechanical, isolated tasks (rename, dep bump, header sweep)</td><td class="k">Workflow tool</td></tr>
+      <tr><td>A handful of independent tasks you&rsquo;ll finish in one sitting</td><td class="k">In-session subagents</td></tr>
+      <tr><td>Tightly coupled work (same files / ordered dependencies)</td><td class="k">Sequential</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn" data-reveal style="margin-top:18px;"><span class="ic">⚠</span><span><strong>The most expensive mistake</strong> is launching a fleet you didn&rsquo;t need. agent-army&rsquo;s only value is buying wall-clock + independent windows + survival. If none of those is the binding constraint, it&rsquo;s the wrong tool.</span></div>
+</section>
+
+<!-- GET STARTED -->
+<section id="start" class="wrap">
+  <div data-reveal><div class="kicker c">// get started</div><h2 class="sec">Install agent-army</h2>
+  <p class="sec-lede">Add the marketplace once, then install the skill. Trigger it by asking for a fleet &mdash; it always runs the Intake Gate first, so it&rsquo;ll talk you out of a fleet you don&rsquo;t need.</p></div>
+  <div class="glass pad" data-reveal style="display:flex;flex-direction:column;gap:12px;">
+    <div class="term"><span class="dollar">$</span><code>/plugin marketplace add amjad1233/ai-skills</code><button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" data-copied="Copied ✓" aria-label="Copy">Copy</button></div>
+    <div class="term"><span class="dollar">$</span><code>/plugin install agent-army@amjad1233</code><button class="cs-copy" data-copy="/plugin install agent-army@amjad1233" data-copied="Copied ✓" aria-label="Copy">Copy</button></div>
+    <div style="display:flex;gap:18px;font-size:13px;font-weight:600;margin-top:4px;">
+      <a class="brand" style="font-size:13px;gap:0" href="https://github.com/amjad1233/ai-skills/tree/main/agent-army" target="_blank" rel="noopener"><span style="color:var(--text)">Read the SKILL &amp; scripts ↗</span></a>
+      <a href="https://amjad1233.github.io/agent-army-skill/" target="_blank" rel="noopener" style="color:var(--a1)">Visual explainer ↗</a>
+    </div>
+  </div>
+  <div data-reveal style="margin-top:18px;text-align:center;">
+    <a class="btn ghost" href="../continuation/">Next skill: continuation →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="row">
+    <span>© 2026 Amjad Pathan · ai-skills · MIT licensed · <a href="../">all skills</a></span>
+    <span><a href="https://github.com/amjad1233/ai-skills" target="_blank" rel="noopener">github.com/amjad1233/ai-skills</a></span>
+  </div>
+</footer>
+</body>
+</html>
