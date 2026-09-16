@@ -46,7 +46,7 @@
   <text x="80" y="332" font-size="74" font-weight="800" letter-spacing="-2" fill="url(#grad)">memory and muscle.</text>
 
   <!-- subhead -->
-  <text x="80" y="392" font-size="26" fill="#c7c4ec">Open-source plugins for Claude Code — install in seconds, then just ask Claude.</text>
+  <text x="80" y="392" font-size="26" fill="#c7c4ec">Open-source skills for AI coding agents — install in seconds, then get back to work.</text>
 
   <!-- install pill -->
   <g transform="translate(80,436)">

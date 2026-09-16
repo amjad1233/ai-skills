@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ai-skills — Open-source plugins for Claude Code</title>
-<meta name="description" content="ai-skills is an open-source, MIT marketplace of plugins for Claude Code. Give your AI coding agent memory across sessions (continuation) and parallelism that survives context limits (agent-army). Install in seconds.">
+<title>ai-skills — Open-source skills for AI coding agents</title>
+<meta name="description" content="ai-skills is an open-source, MIT collection of skills for AI coding agents. Give your AI coding agent memory across sessions (continuation) and parallelism that survives context limits (agent-army). Install in seconds.">
 <meta name="keywords" content="Claude Code skills, Claude Code plugins, Claude Code marketplace, AI coding agent, Claude Code context window, parallel Claude agents, session handoff">
 <meta name="author" content="Amjad Pathan">
-<link rel="canonical" href="https://claude-skills.amjad1233.com">
+<link rel="canonical" href="https://ai-skills.amjad1233.com">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://claude-skills.amjad1233.com">
-<meta property="og:title" content="ai-skills — Open-source plugins for Claude Code">
+<meta property="og:url" content="https://ai-skills.amjad1233.com">
+<meta property="og:title" content="ai-skills — Open-source skills for AI coding agents">
 <meta property="og:description" content="Skills that give Claude Code memory and muscle. Open-source, MIT, install in seconds.">
-<meta property="og:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta property="og:image" content="https://ai-skills.amjad1233.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ai-skills — Open-source plugins for Claude Code">
+<meta name="twitter:title" content="ai-skills — Open-source skills for AI coding agents">
 <meta name="twitter:description" content="Skills that give Claude Code memory and muscle. Open-source, MIT, install in seconds.">
-<meta name="twitter:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta name="twitter:image" content="https://ai-skills.amjad1233.com/og.png">
 <meta name="theme-color" content="#070710">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"ai-skills","url":"https://claude-skills.amjad1233.com","description":"An open-source, MIT marketplace of skills for coding agents: project memory that any agent can read (continuation) and parallel agent fleets (agent-army).","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"agent-army","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","description":"Run a fleet of autonomous Claude agents in parallel, each in its own git worktree, coordinated by an on-disk command centre that survives context limits.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}},{"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"continuation","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code, opencode, Codex, Cursor","description":"Project memory for any coding agent: decisions, learnings, conventions and session handoffs as typed records, written as you work and read in one hot file every session.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}}]}}
+{"@context":"https://schema.org","@type":"WebSite","name":"ai-skills","url":"https://ai-skills.amjad1233.com","description":"An open-source, MIT marketplace of skills for coding agents: project memory that any agent can read (continuation) and parallel agent fleets (agent-army).","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"agent-army","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","description":"Run a fleet of autonomous Claude agents in parallel, each in its own git worktree, coordinated by an on-disk command centre that survives context limits.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}},{"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"continuation","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code, opencode, Codex, Cursor","description":"Project memory for any coding agent: decisions, learnings, conventions and session handoffs as typed records, written as you work and read in one hot file every session.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"Amjad Pathan"}}}]}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
     --text:#f4f5fb; --dim:rgba(244,245,251,.66); --mute:rgba(244,245,251,.40);
     --surface:rgba(255,255,255,.045); --surface2:rgba(255,255,255,.075);
     --border:rgba(255,255,255,.10); --border2:rgba(255,255,255,.17);
-    --a1:#a78bfa; --a2:#22d3ee; --a3:#e879f9; --lime:#bef264;
+    --a1:#2a5bd7; --a2:#cf4136; --a3:#f0b429; --lime:#b6d957;
     --font-d:'Space Grotesk',sans-serif; --font-b:'Hanken Grotesk',sans-serif; --font-m:'JetBrains Mono',ui-monospace,monospace;
   }
   html{scroll-behavior:smooth;}
@@ -62,6 +62,25 @@
   .cs-skill{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:stretch;}
   .cs-chip{padding:9px 17px;border-radius:100px;font-family:var(--font-b);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--surface);color:var(--dim);transition:background .2s ease,color .2s ease,border-color .2s ease;}
   .cs-chip.active{border-color:transparent;background:linear-gradient(120deg,var(--a1),var(--a2));color:#0a0a12;}
+  .hero-terminal{display:none!important;}
+  .hero-art{display:none!important;}
+  .field-card{display:block;position:relative;min-height:430px;padding:28px;background:#f0eadf;color:#17151a;border:1px solid rgba(23,21,26,.22);box-shadow:12px 14px 0 #2a5bd7;transform:rotate(-1.2deg);overflow:hidden;}
+  .field-card:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(42,91,215,.12) 32px),linear-gradient(90deg,transparent 0 45px,rgba(207,65,54,.2) 46px,transparent 47px);pointer-events:none;}
+  .field-card > *{position:relative;z-index:1;}
+  .field-label{display:flex;justify-content:space-between;font:600 11px/1 var(--font-m);letter-spacing:.12em;text-transform:uppercase;color:#5c5960;}
+  .field-title{font:700 clamp(2rem,4vw,3rem)/.95 var(--font-d);letter-spacing:-.06em;margin:54px 0 18px;max-width:310px;}
+  .field-line{height:1px;background:#17151a;width:72%;margin:16px 0;opacity:.55;}
+  .field-code{font:500 13px/1.8 var(--font-m);color:#2a5bd7;}
+  .field-note{position:absolute!important;right:22px;bottom:24px;padding:9px 11px;background:#cf4136;color:#fff;font:600 11px/1 var(--font-m);transform:rotate(3deg);}
+  .editorial-rule{height:1px;background:rgba(244,245,251,.18);max-width:1200px;margin:0 auto;}
+  body:has(.field-card){background:#101014;}
+  body:has(.field-card) [aria-hidden="true"]{background:#101014!important;}
+  body:has(.field-card) .cs-blob,body:has(.field-card) #cs-fx{display:none!important;}
+  .adhd-strip{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px;margin-top:30px;}
+  .adhd-step{border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.045);}
+  .adhd-step strong{display:block;color:var(--text);font-family:var(--font-m);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;}
+  .adhd-step span{color:var(--dim);font-size:14px;line-height:1.4;}
+  @media(max-width:760px){.adhd-strip{grid-template-columns:1fr;}}
   @media(max-width:760px){ .cs-skill{grid-template-columns:1fr;gap:20px;} }
   @media(min-width:981px){ #cs-menu{display:none!important;} }
   @media(max-width:980px){
@@ -139,14 +158,14 @@
         <div>
           <div style="display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border:1px solid var(--border2);border-radius:100px;background:var(--surface);font-size:13px;font-weight:500;color:var(--dim);margin-bottom:26px;font-family:var(--font-m);">
             <span style="width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);"></span>
-            open-source · MIT · for Claude Code
+            open-source · MIT · for AI coding agents
           </div>
           <h1 style="font-family:var(--font-d);font-weight:700;font-size:clamp(2.7rem,6.1vw,4.9rem);line-height:.99;letter-spacing:-.035em;margin:0 0 22px;">
-            Skills that give Claude&nbsp;Code
-            <span style="background:linear-gradient(105deg,var(--a1),var(--a2) 60%,var(--a3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">memory and muscle.</span>
+            Less re-explaining.
+            <span style="background:linear-gradient(105deg,var(--a1),var(--a2) 60%,var(--a3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">More doing.</span>
           </h1>
           <p style="font-size:clamp(1.05rem,1.6vw,1.26rem);line-height:1.55;color:var(--dim);max-width:560px;margin:0 0 30px;">
-            Your AI coding agent is brilliant — and forgetful, and single-threaded. <strong style="color:var(--text);font-weight:600;">ai-skills</strong> is an open-source marketplace of drop-in plugins that fix that. Add the marketplace once, install what you need, then just ask Claude.
+            Your coding agent can move fast. It still needs a place to leave the thread. <strong style="color:var(--text);font-weight:600;">ai-skills</strong> keeps project memory close to the code and gives big jobs a way to split up.
           </p>
 
           <div style="max-width:560px;margin-bottom:14px;">
@@ -168,7 +187,14 @@
         </div>
 
         <div class="cs-hero-visual" style="position:relative;animation:csfloat 7s ease-in-out infinite;">
-          <div style="background:rgba(13,13,24,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border2);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;">
+          <div class="field-card" role="img" aria-label="Field note showing a project memory workflow">
+            <div class="field-label"><span>field note · 001</span><span>ai-skills</span></div>
+            <div class="field-title">Leave the thread somewhere useful.</div>
+            <div class="field-line"></div>
+            <div class="field-code">/remember convention<br>→ write it down<br><br>/end<br>→ leave a handoff<br><br>/continue<br>→ pick up where you left off</div>
+            <div class="field-note">NO RECAP REQUIRED</div>
+          </div>
+          <div class="hero-terminal" style="background:rgba(13,13,24,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border2);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;">
             <div style="display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--border);">
               <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;"></span>
               <span style="width:11px;height:11px;border-radius:50%;background:#febc2e;"></span>
@@ -184,11 +210,16 @@
               <div style="color:var(--a1);margin-top:6px;">⚡ launching 5 agents across 5 worktrees…<span style="display:inline-block;width:8px;height:15px;background:var(--a1);margin-left:3px;vertical-align:middle;animation:csblink 1s steps(1) infinite;"></span></div>
             </div>
           </div>
-          <div style="position:absolute;bottom:-18px;right:-14px;background:rgba(13,13,24,.7);backdrop-filter:blur(14px);border:1px solid var(--border2);border-radius:14px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.5);">
-            <div style="font-family:var(--font-d);font-weight:700;font-size:22px;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">2 skills</div>
-            <div style="font-size:12px;color:var(--mute);">more incoming →</div>
+          <div style="position:absolute;bottom:-18px;right:-14px;background:#f3ead9;color:#11101a;border:1px solid rgba(17,16,26,.15);border-radius:14px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.35);transform:rotate(2deg);">
+            <div style="font-family:var(--font-m);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;">Keep the thread</div>
+            <div style="font-size:12px;color:#5d5961;margin-top:4px;">write it down once →</div>
           </div>
         </div>
+      </div>
+      <div class="adhd-strip" aria-label="Quick start">
+        <div class="adhd-step"><strong>01 · Pick one</strong><span>Start with the project that makes you re-explain yourself most.</span></div>
+        <div class="adhd-step"><strong>02 · Install</strong><span>Copy the command. Add one skill. Stop there.</span></div>
+        <div class="adhd-step"><strong>03 · Resume</strong><span>Next session: run <code style="color:var(--a2)">/continue</code> and get back to work.</span></div>
       </div>
     </div>
     </header>
@@ -227,7 +258,7 @@
         <div style="max-width:620px;">
           <div style="font-family:var(--font-m);font-size:13px;color:var(--a2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;">// the skills</div>
           <h2 id="skills-h" style="font-family:var(--font-d);font-weight:700;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1;margin:0 0 14px;">The skills</h2>
-          <p style="font-size:15.5px;color:var(--dim);line-height:1.55;margin:0;">Each one is a complete, standalone plugin. Copy the command, paste it into Claude Code, done. Take one, take both, mix and match.</p>
+          <p style="font-size:15.5px;color:var(--dim);line-height:1.55;margin:0;">Continuation works anywhere your agent can read a skill file. Agent Army adds Claude Code orchestration when you need parallel worktrees.</p>
         </div>
         <div style="display:flex;gap:9px;flex-wrap:wrap;">
           <button class="cs-chip active" data-filter="All">All</button>
@@ -538,7 +569,8 @@
             <span style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;font-family:var(--font-m);font-weight:600;color:#0a0a12;font-size:15px;">/</span>
             ai-skills
           </a>
-          <p style="font-size:13.5px;color:var(--mute);line-height:1.6;margin:0 0 16px;max-width:280px;">Open-source plugins for Claude Code. Memory across sessions, parallelism that survives context limits. Add the marketplace, install a skill, just ask.</p>
+          <p style="font-size:13.5px;color:var(--mute);line-height:1.6;margin:0 0 16px;max-width:280px;">Open-source skills for AI coding agents. Project memory with continuation, parallel Claude Code sessions with agent-army.</p>
+          <p style="font-size:13.5px;margin:0 0 16px;"><a class="cs-link" href="https://ai-skills.amjad1233.com">ai-skills.amjad1233.com</a></p>
           <p style="font-size:13.5px;color:var(--dim);line-height:1.6;margin:0;">Built &amp; maintained by <a class="cs-link" href="https://github.com/amjad1233" target="_blank" rel="noopener" style="color:var(--text);font-weight:600;">Amjad Pathan</a>.</p>
         </div>
         <nav aria-label="Footer">

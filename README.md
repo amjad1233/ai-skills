@@ -1,9 +1,10 @@
 # ai-skills
 
-> Amjad's open-source [Claude Code](https://claude.com/claude-code) skills — one marketplace,
-> each skill a complete standalone plugin. Add the marketplace once, install whichever you want.
+> Amjad's open-source skills for AI coding agents: project memory with **continuation**
+> and parallel Claude Code sessions with **agent-army**. Install portable skill files with
+> skills.sh, or add the Claude Code marketplace for slash commands.
 
-**🌐 Explainer & install guide:** [claude-skills.amjad1233.com](https://claude-skills.amjad1233.com)
+**🌐 Explainer & install guide:** [ai-skills.amjad1233.com](https://ai-skills.amjad1233.com)
 
 [![skills.sh](https://skills.sh/b/amjad1233/ai-skills)](https://skills.sh/amjad1233/ai-skills)
 
@@ -30,7 +31,7 @@ Then install any skill from the marketplace:
 
 (`@amjad1233` is the marketplace name, not the GitHub handle.)
 
-### Any agent — Codex, Cursor, opencode, Claude Code
+### Any agent — Codex, Cursor, opencode, Gemini CLI, and more
 
 ```
 npx skills add amjad1233/ai-skills
@@ -43,8 +44,9 @@ npx skills add amjad1233/ai-skills --skill agent-army -a claude-code -g -y
 ```
 
 Files land in your repo as ordinary files you own and can edit; pull later changes with
-`npx skills update`. Note that `/next` (fresh-terminal launcher) ships only in the Claude Code
-plugin — the portable skill covers the handoff/resume loop.
+`npx skills update`. The portable `continuation` skill works anywhere your agent can read
+`SKILL.md`. Its Claude Code plugin adds `/end`, `/continue`, `/remember`, and `/next`.
+`agent-army` currently requires Claude Code because its launchers manage `claude` processes.
 
 ## Skills
 
@@ -71,7 +73,7 @@ ai-skills/
 ├── .claude-plugin/marketplace.json   # the marketplace ("amjad1233"), lists every plugin
 ├── agent-army/                       # standalone plugin
 ├── continuation/                     # standalone plugin
-└── docs/                             # the landing page (claude-skills.amjad1233.com)
+└── docs/                             # the landing page (ai-skills.amjad1233.com)
 ```
 
 ## Licence

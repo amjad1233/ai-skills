@@ -62,8 +62,9 @@ agent-army ships in the [`amjad1233` skills marketplace](https://github.com/amja
 /plugin install agent-army@amjad1233
 ```
 
-Prefer editable files, or not on Claude Code? Use the [skills.sh](https://skills.sh/amjad1233/ai-skills)
-installer instead — it copies the skill in and works on ~75 agents:
+Prefer editable files? Use the [skills.sh](https://skills.sh/amjad1233/ai-skills)
+installer to copy the skill into an agent-supported directory. The current launcher
+implementation is Claude Code-specific:
 
 ```
 npx skills add amjad1233/ai-skills --skill agent-army

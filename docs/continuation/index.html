@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>continuation — project memory for any coding agent</title>
+<title>continuation — project memory across coding agents</title>
 <meta name="description" content="continuation gives any coding agent project memory. Decisions, learnings, conventions and session handoffs live as typed records in .continuation/, written as you work and read in one hot file every session. /end, /continue, /remember, /continuation-review, /next.">
 <meta name="keywords" content="continuation, project memory, AI coding agent memory, session handoff, decisions, learnings, conventions, Claude Code, opencode, Codex, Cursor, /end /continue /remember">
 <meta name="author" content="Amjad Pathan">
-<link rel="canonical" href="https://claude-skills.amjad1233.com/continuation/">
+<link rel="canonical" href="https://ai-skills.amjad1233.com/continuation/">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://claude-skills.amjad1233.com/continuation/">
+<meta property="og:url" content="https://ai-skills.amjad1233.com/continuation/">
 <meta property="og:title" content="continuation — project memory for any coding agent">
 <meta property="og:description" content="Typed decisions, learnings, conventions and handoffs in .continuation/, written as you work, read in one hot file every session. Works with Claude Code, opencode, Codex, Cursor.">
-<meta property="og:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta property="og:image" content="https://ai-skills.amjad1233.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://claude-skills.amjad1233.com/og.png">
+<meta name="twitter:image" content="https://ai-skills.amjad1233.com/og.png">
 <meta name="theme-color" content="#070710">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"TechArticle","headline":"continuation — project memory for any coding agent","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"about":{"@type":"SoftwareApplication","name":"continuation","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code, opencode, Codex, Cursor","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT"},"url":"https://claude-skills.amjad1233.com/continuation/","publisher":{"@type":"Person","name":"Amjad Pathan"}}
+{"@context":"https://schema.org","@type":"TechArticle","headline":"continuation — project memory for any coding agent","author":{"@type":"Person","name":"Amjad Pathan","url":"https://github.com/amjad1233"},"about":{"@type":"SoftwareApplication","name":"continuation","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code, opencode, Codex, Cursor","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT"},"url":"https://ai-skills.amjad1233.com/continuation/","publisher":{"@type":"Person","name":"Amjad Pathan"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +45,9 @@
 
 <header class="s-hero wrap">
   <div class="crumb"><a href="../">ai-skills</a> <span>/</span> <span style="color:var(--text)">continuation</span></div>
-  <span class="badge"><span class="dot" style="background:var(--a2);box-shadow:0 0 10px var(--a2)"></span> Sessions · MIT · for Claude Code</span>
-  <h1>claude-<span class="grad">continuation</span></h1>
-  <p class="lede"><strong>Never re-explain your project to Claude again.</strong> Three slash commands give Claude Code <strong>memory across sessions</strong>: <code>/end</code> captures where you left off, <code>/continue</code> picks it back up, and <code>/next</code> opens the next session in a fresh terminal. Beat context limits with zero recap and zero lost momentum.</p>
+  <span class="badge"><span class="dot" style="background:var(--a2);box-shadow:0 0 10px var(--a2)"></span> Sessions · MIT · works across agents</span>
+  <h1>project <span class="grad">continuation</span></h1>
+  <p class="lede"><strong>Stop re-explaining your project.</strong> Continuation stores decisions, learnings, conventions, and handoffs as Markdown in your repo. It works with any agent that can read a skill file; the Claude Code plugin adds <code>/end</code>, <code>/continue</code>, and <code>/next</code>.</p>
   <div class="hero-actions">
     <a class="btn grad" href="#start">Get started →</a>
     <a class="btn ghost" href="https://github.com/amjad1233/ai-skills/tree/main/continuation" target="_blank" rel="noopener">Source ↗</a>
@@ -125,7 +125,7 @@
     </div>
     <div class="cell" data-reveal>
       <div class="ic" style="background:rgba(190,242,100,.14);color:var(--lime)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg></div>
-      <div class="tag">Who</div><h3>Any Claude Code dev</h3>
+      <div class="tag">Who</div><h3>Anyone using an AI coding agent</h3>
       <p>Any language, any stack, solo or team. No dependencies, no runtime. Works in git repos and plain directories alike.</p>
     </div>
     <div class="cell" data-reveal>
@@ -219,7 +219,7 @@
 <!-- GET STARTED -->
 <section id="start" class="wrap">
   <div data-reveal><div class="kicker c">// get started</div><h2 class="sec">Install continuation</h2>
-  <p class="sec-lede">Add the marketplace once, then install the skill. After installing, type <code>/</code> &mdash; you&rsquo;ll see <code>/end</code> and <code>/continue</code> in the autocomplete.</p></div>
+  <p class="sec-lede">Use skills.sh for the portable skill, or add the marketplace for Claude Code&rsquo;s slash commands. After installing the plugin, type <code>/</code> to see <code>/end</code> and <code>/continue</code>.</p></div>
   <div class="glass pad" data-reveal style="display:flex;flex-direction:column;gap:12px;">
     <div class="term"><span class="dollar">$</span><code>/plugin marketplace add amjad1233/ai-skills</code><button class="cs-copy" data-copy="/plugin marketplace add amjad1233/ai-skills" data-copied="Copied ✓" aria-label="Copy">Copy</button></div>
     <div class="term"><span class="dollar">$</span><code>/plugin install continuation@amjad1233</code><button class="cs-copy" data-copy="/plugin install continuation@amjad1233" data-copied="Copied ✓" aria-label="Copy">Copy</button></div>
