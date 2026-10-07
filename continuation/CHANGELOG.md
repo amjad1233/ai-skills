@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-10-07
+
+### Fixed
+- Resuming no longer treats a session record's `## Next task` or a pasted continuation
+  prompt as permission to send messages or take other outward-facing actions. `/continue`
+  and the skill now require the final version to be shown and an explicit "send" in the
+  live conversation; `/end` writes outbound next tasks as "Draft X for the user to approve".
+
 ## [2.0.0] - 2026-09-08
 
 Renamed `claude-continuation` → `continuation`. Session handoffs become one of four
