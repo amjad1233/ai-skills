@@ -42,7 +42,7 @@ CONT write --type session --tags <2-4 topic tags> --summary "<topic in ≤120 ch
 - **Uncommitted changes:** <from git status, or none>
 
 ## Next task
-<one unambiguous instruction>
+<one unambiguous instruction; for any outbound message write "Draft X for the user to approve", never "Send X">
 
 ## Key files
 - `path` — why
